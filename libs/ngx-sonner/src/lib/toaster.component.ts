@@ -1,5 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -7,6 +8,7 @@ import {
   ElementRef,
   inject,
   input,
+  numberAttribute,
   OnDestroy,
   PLATFORM_ID,
   signal,
@@ -110,15 +112,28 @@ export class ToasterComponent implements OnDestroy {
   toasts = this.sonner.toasts;
   heights = this.sonner.heights;
 
-  invert = input<ToasterProps['invert']>(false);
+  invert = input<ToasterProps['invert'], unknown>(false, {
+    transform: booleanAttribute,
+  });
   theme = input<ToasterProps['theme']>('light');
   position = input<ToasterProps['position']>('bottom-right');
   hotKey = input<ToasterProps['hotkey']>(['altKey', 'KeyT']);
-  richColors = input<ToasterProps['richColors']>(false);
-  expand = input<ToasterProps['expand']>(false);
-  duration = input<ToasterProps['duration']>(TOAST_LIFETIME);
-  visibleToasts = input<ToasterProps['visibleToasts']>(VISIBLE_TOASTS_AMOUNT);
-  closeButton = input<ToasterProps['closeButton']>(false);
+  richColors = input<ToasterProps['richColors'], unknown>(false, {
+    transform: booleanAttribute,
+  });
+  expand = input<ToasterProps['expand'], unknown>(false, {
+    transform: booleanAttribute,
+  });
+  duration = input<ToasterProps['duration'], unknown>(TOAST_LIFETIME, {
+    transform: numberAttribute,
+  });
+  visibleToasts = input<ToasterProps['visibleToasts'], unknown>(
+    VISIBLE_TOASTS_AMOUNT,
+    { transform: numberAttribute }
+  );
+  closeButton = input<ToasterProps['closeButton'], unknown>(false, {
+    transform: booleanAttribute,
+  });
   toastOptions = input<ToasterProps['toastOptions']>({});
   offset = input<ToasterProps['offset']>(null);
   dir = input<ToasterProps['dir']>(this.getDocumentDirection());
