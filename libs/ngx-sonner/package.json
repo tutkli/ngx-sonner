@@ -1,9 +1,30 @@
 {
   "name": "ngx-sonner",
-  "version": "0.0.1",
+  "description": "An opinionated toast component for Svelte.",
+  "version": "0.2.0",
+  "bugs": {
+    "url": "https://github.com/tutkli/ngx-sonner/issues"
+  },
+  "homepage": "https://tutkli.github.io/ngx-sonner/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tutkli/ngx-sonner",
+    "directory": "libs/ngx-sonner"
+  },
+  "keywords": [
+    "angular",
+    "angular 2",
+    "toast",
+    "sonner"
+  ],
+  "author": {
+    "name": "Clara Castillo",
+    "url": "https://github.com/tutkli"
+  },
+  "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^17.1.0",
-    "@angular/core": "^17.1.0"
+    "@angular/common": ">=17.1.0",
+    "@angular/core": ">=17.1.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"

@@ -2,7 +2,13 @@
   "name": "@ngx-sonner/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start:docs": "nx serve docs",
+    "build": "nx run-many --target build --all --parallel=1",
+    "prettify": "prettier --write .",
+    "test": "nx test ngx-sonner",
+    "tests:ci": "nx test ngx-sonner --runInBand"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~17.1.0",
