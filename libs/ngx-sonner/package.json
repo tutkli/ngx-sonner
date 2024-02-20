@@ -1,6 +1,6 @@
 {
   "name": "ngx-sonner",
-  "description": "An opinionated toast component for Svelte.",
+  "description": "An opinionated toast component for Angular.",
   "version": "0.2.1",
   "bugs": {
     "url": "https://github.com/tutkli/ngx-sonner/issues"
