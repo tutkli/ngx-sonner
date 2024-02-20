@@ -238,7 +238,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
   // viewChild.required<ElementRef<HTMLLIElement>>('toastRef')
   @ViewChild('toastRef') toastRef!: ElementRef<HTMLLIElement>;
 
-  classes = computed(() => ({
+  classes: any = computed(() => ({
     ...defaultClasses,
     ...this._classes,
   }));
