@@ -104,13 +104,13 @@ export class ToasterComponent implements OnDestroy {
   richColors = input<ToasterProps['richColors']>(false);
   expand = input<ToasterProps['expand']>(false);
   duration = input<ToasterProps['duration']>(this.config.toastLifetime);
-  visibleToasts = signal<ToasterProps['visibleToasts']>(
+  visibleToasts = input<ToasterProps['visibleToasts']>(
     this.config.visibleToastsAmount
   );
-  closeButton = signal<ToasterProps['closeButton']>(false);
-  toastOptions = signal<ToasterProps['toastOptions']>({});
-  offset = signal<ToasterProps['offset']>(null);
-  dir = signal<ToasterProps['dir']>(this.getDocumentDirection());
+  closeButton = input<ToasterProps['closeButton']>(false);
+  toastOptions = input<ToasterProps['toastOptions']>({});
+  offset = input<ToasterProps['offset']>(null);
+  dir = input<ToasterProps['dir']>(this.getDocumentDirection());
   _class = input('', { alias: 'class' });
   _style = input<Record<string, string>>({}, { alias: 'style' });
 

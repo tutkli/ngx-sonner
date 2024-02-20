@@ -13,7 +13,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "ngxSonner",
+            "prefix": "docs",
             "style": "camelCase"
           }
         ],
@@ -21,7 +21,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "ngx-sonner",
+            "prefix": "docs",
             "style": "kebab-case"
           }
         ]

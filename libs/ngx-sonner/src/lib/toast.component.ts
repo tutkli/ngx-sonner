@@ -91,7 +91,11 @@ import { ToastProps } from './types';
               <ng-content select="[loading-icon]" />
             }
             @if (toast().icon) {
-              <ng-container *ngComponentOutlet="toast().icon | asComponent" />
+              <ng-container
+                *ngComponentOutlet="
+                  toast().icon | asComponent;
+                  inputs: toast().componentProps
+                " />
             } @else {
               @switch (toastType()) {
                 @case ('success') {
@@ -118,7 +122,11 @@ import { ToastProps } from './types';
               @if (title | isString) {
                 {{ toast().title }}
               } @else {
-                <ng-container *ngComponentOutlet="title | asComponent" />
+                <ng-container
+                  *ngComponentOutlet="
+                    title | asComponent;
+                    inputs: toast().componentProps
+                  " />
               }
             </div>
           }
@@ -136,7 +144,11 @@ import { ToastProps } from './types';
               @if (description | isString) {
                 {{ toast().description }}
               } @else {
-                <ng-container *ngComponentOutlet="description | asComponent" />
+                <ng-container
+                  *ngComponentOutlet="
+                    description | asComponent;
+                    inputs: toast().componentProps
+                  " />
               }
             </div>
           }
