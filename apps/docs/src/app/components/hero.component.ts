@@ -29,7 +29,7 @@ import { SonnerService } from 'ngx-sonner';
         </button>
         <a
           class="button"
-          href="https://github.com/tutkli/ngx-toast"
+          href="https://github.com/tutkli/ngx-sonner"
           target="_blank">
           GitHub
         </a>
