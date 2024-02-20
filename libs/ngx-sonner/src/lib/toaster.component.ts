@@ -214,6 +214,8 @@ export class ToasterComponent implements OnDestroy {
   }
 
   private handleKeydown = (event: KeyboardEvent) => {
+    if (!this.listRef?.nativeElement) return;
+
     const isHotkeyPressed = this.hotKey().every(
       key => (event as any)[key] || event.code === key
     );
