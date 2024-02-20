@@ -1,14 +1,28 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { SonnerService, ToasterComponent } from 'ngx-sonner';
+import { CustomComponent } from './custom.component';
 
 @Component({
-  standalone: true,
-  imports: [NxWelcomeComponent, RouterModule],
   selector: 'ngx-sonner-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  standalone: true,
+  imports: [ToasterComponent],
+  template: `
+    <ngx-sonner-toaster />
+
+    <button (click)="sonner.message('Hello world!')">message</button>
+    <button (click)="custom()">custom</button>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  title = 'docs';
+  protected readonly sonner = inject(SonnerService);
+
+  custom() {
+    this.sonner.custom(CustomComponent, {
+      componentProps: {
+        label: 'Hello from component',
+        description: 'This is an Angular component',
+      },
+    });
+  }
 }

@@ -1,0 +1,26 @@
+{
+  "name": "ngx-sonner",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ngx-sonner/src",
+  "prefix": "ngx-sonner",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/ngx-sonner/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/ngx-sonner/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/ngx-sonner/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    }
+  }
+}
