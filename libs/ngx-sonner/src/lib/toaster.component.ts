@@ -17,14 +17,10 @@ import {
 import { IconComponent } from './icon.component';
 import { LoaderComponent } from './loader.component';
 import { ToastPositionPipe } from './pipes/toast-position.pipe';
+import { SONNER_CONFIG } from './sonner.config';
 import { SonnerService } from './sonner.service';
 import { ToastComponent } from './toast.component';
 import { Position, ToasterProps } from './types';
-
-const VISIBLE_TOASTS_AMOUNT = 5;
-const VIEWPORT_OFFSET = '32px';
-const TOAST_WIDTH = 356;
-const GAP = 14;
 
 @Component({
   selector: 'ngx-sonner-toaster',
@@ -95,6 +91,7 @@ const GAP = 14;
 })
 export class ToasterComponent implements OnDestroy {
   private readonly sonner = inject(SonnerService);
+  private readonly config = inject(SONNER_CONFIG);
   private readonly platformId = inject(PLATFORM_ID);
 
   toasts = this.sonner.toasts;
@@ -106,8 +103,10 @@ export class ToasterComponent implements OnDestroy {
   hotKey = input<ToasterProps['hotkey']>(['altKey', 'KeyT']);
   richColors = input<ToasterProps['richColors']>(false);
   expand = input<ToasterProps['expand']>(false);
-  duration = input<ToasterProps['duration']>(4000);
-  visibleToasts = signal<ToasterProps['visibleToasts']>(VISIBLE_TOASTS_AMOUNT);
+  duration = input<ToasterProps['duration']>(this.config.toastLifetime);
+  visibleToasts = signal<ToasterProps['visibleToasts']>(
+    this.config.visibleToastsAmount
+  );
   closeButton = signal<ToasterProps['closeButton']>(false);
   toastOptions = signal<ToasterProps['toastOptions']>({});
   offset = signal<ToasterProps['offset']>(null);
@@ -147,9 +146,9 @@ export class ToasterComponent implements OnDestroy {
     '--offset':
       typeof this.offset() === 'number'
         ? `${this.offset()}px`
-        : this.offset() ?? VIEWPORT_OFFSET,
-    '--width': `${TOAST_WIDTH}px`,
-    '--gap': `${GAP}px`,
+        : this.offset() ?? `${this.config.viewportOffset}px`,
+    '--width': `${this.config.toastWidth}px`,
+    '--gap': `${this.config.gap}px`,
     ...this._style(),
   }));
 
