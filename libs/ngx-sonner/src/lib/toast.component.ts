@@ -16,9 +16,35 @@ import {
 import { cn } from './internal/cn';
 import { AsComponentPipe } from './pipes/as-component.pipe';
 import { IsStringPipe } from './pipes/is-string.pipe';
-import { SONNER_CONFIG } from './sonner.config';
 import { SonnerService } from './sonner.service';
-import { ToastProps } from './types';
+import { ToastClassnames, ToastProps } from './types';
+
+// Default lifetime of a toasts (in ms)
+const TOAST_LIFETIME = 4000;
+
+// Default gap between toasts
+const GAP = 14;
+
+const SWIPE_THRESHOLD = 20;
+
+const TIME_BEFORE_UNMOUNT = 200;
+
+const defaultClasses: ToastClassnames = {
+  toast: '',
+  title: '',
+  description: '',
+  loader: '',
+  closeButton: '',
+  cancelButton: '',
+  actionButton: '',
+  action: '',
+  warning: '',
+  error: '',
+  success: '',
+  default: '',
+  info: '',
+  loading: '',
+};
 
 @Component({
   selector: 'ngx-sonner-toast',
@@ -179,7 +205,6 @@ import { ToastProps } from './types';
 })
 export class ToastComponent implements AfterViewInit, OnDestroy {
   private readonly sonner = inject(SonnerService);
-  private readonly config = inject(SONNER_CONFIG);
   protected readonly cn = cn;
 
   toasts = this.sonner.toasts;
@@ -196,7 +221,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
   interacting = input.required<ToastProps['interacting']>();
   cancelButtonStyle = input<ToastProps['cancelButtonStyle']>('');
   actionButtonStyle = input<ToastProps['actionButtonStyle']>('');
-  duration = input<ToastProps['duration']>(this.config.toastLifetime);
+  duration = input<ToastProps['duration']>(TOAST_LIFETIME);
   descriptionClass = input<ToastProps['descriptionClass']>('');
   _classes = input<ToastProps['classes']>({}, { alias: 'classes' });
   unstyled = input<ToastProps['unstyled']>(false);
@@ -214,7 +239,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
   @ViewChild('toastRef') toastRef!: ElementRef<HTMLLIElement>;
 
   classes = computed(() => ({
-    ...this.config.defaultClasses,
+    ...defaultClasses,
     ...this._classes,
   }));
 
@@ -278,9 +303,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
     effect(() => {
       const heightIndex = this.heightIndex();
       const toastsHeightBefore = this.toastsHeightBefore();
-      untracked(() =>
-        this.offset.set(heightIndex * this.config.gap + toastsHeightBefore)
-      );
+      untracked(() => this.offset.set(heightIndex * GAP + toastsHeightBefore));
     });
 
     effect(() => {
@@ -290,7 +313,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
         // new duration
         clearTimeout(this.timeoutId);
         this.remainingTime =
-          this.toast().duration ?? this.duration() ?? this.config.toastLifetime;
+          this.toast().duration ?? this.duration() ?? TOAST_LIFETIME;
         this.startTimer();
       }
     });
@@ -314,7 +337,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.remainingTime =
-      this.toast().duration ?? this.duration() ?? this.config.toastLifetime;
+      this.toast().duration ?? this.duration() ?? TOAST_LIFETIME;
     this.mounted.set(true);
     const height = this.toastRef.nativeElement.getBoundingClientRect().height;
     this.initialHeight.set(height);
@@ -334,7 +357,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
 
     setTimeout(() => {
       this.sonner.dismiss(this.toast().id);
-    }, this.config.timeBeforeUnmount);
+    }, TIME_BEFORE_UNMOUNT);
   }
 
   // If toast's duration changes, it will be out of sync with the
@@ -386,7 +409,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
     );
 
     // Remove only if threshold is met
-    if (Math.abs(swipeAmount) >= this.config.swipeThreshold) {
+    if (Math.abs(swipeAmount) >= SWIPE_THRESHOLD) {
       this.offsetBeforeRemove.set(this.offset());
       this.toast().onDismiss?.(this.toast());
       this.deleteToast();

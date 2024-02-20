@@ -17,10 +17,24 @@ import {
 import { IconComponent } from './icon.component';
 import { LoaderComponent } from './loader.component';
 import { ToastPositionPipe } from './pipes/toast-position.pipe';
-import { SONNER_CONFIG } from './sonner.config';
 import { SonnerService } from './sonner.service';
 import { ToastComponent } from './toast.component';
 import { Position, ToasterProps } from './types';
+
+// Default lifetime of a toasts (in ms)
+const TOAST_LIFETIME = 4000;
+
+// Visible toasts amount
+const VISIBLE_TOASTS_AMOUNT = 3;
+
+// Viewport padding
+const VIEWPORT_OFFSET = '32px';
+
+// Default toast width
+const TOAST_WIDTH = 356;
+
+// Default gap between toasts
+const GAP = 14;
 
 @Component({
   selector: 'ngx-sonner-toaster',
@@ -91,7 +105,6 @@ import { Position, ToasterProps } from './types';
 })
 export class ToasterComponent implements OnDestroy {
   private readonly sonner = inject(SonnerService);
-  private readonly config = inject(SONNER_CONFIG);
   private readonly platformId = inject(PLATFORM_ID);
 
   toasts = this.sonner.toasts;
@@ -103,10 +116,8 @@ export class ToasterComponent implements OnDestroy {
   hotKey = input<ToasterProps['hotkey']>(['altKey', 'KeyT']);
   richColors = input<ToasterProps['richColors']>(false);
   expand = input<ToasterProps['expand']>(false);
-  duration = input<ToasterProps['duration']>(this.config.toastLifetime);
-  visibleToasts = input<ToasterProps['visibleToasts']>(
-    this.config.visibleToastsAmount
-  );
+  duration = input<ToasterProps['duration']>(TOAST_LIFETIME);
+  visibleToasts = input<ToasterProps['visibleToasts']>(VISIBLE_TOASTS_AMOUNT);
   closeButton = input<ToasterProps['closeButton']>(false);
   toastOptions = input<ToasterProps['toastOptions']>({});
   offset = input<ToasterProps['offset']>(null);
@@ -146,9 +157,9 @@ export class ToasterComponent implements OnDestroy {
     '--offset':
       typeof this.offset() === 'number'
         ? `${this.offset()}px`
-        : this.offset() ?? `${this.config.viewportOffset}px`,
-    '--width': `${this.config.toastWidth}px`,
-    '--gap': `${this.config.gap}px`,
+        : this.offset() ?? `${VIEWPORT_OFFSET}`,
+    '--width': `${TOAST_WIDTH}px`,
+    '--gap': `${GAP}px`,
     ...this._style(),
   }));
 
