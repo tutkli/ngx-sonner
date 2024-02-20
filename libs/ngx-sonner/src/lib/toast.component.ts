@@ -318,7 +318,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
       }
     });
 
-    effect(() => {
+    effect(onCleanup => {
       if (!this.isPromiseLoadingOrInfiniteDuration()) {
         if (this.expanded() || this.interacting()) {
           this.pauseTimer();
@@ -326,6 +326,8 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
           this.startTimer();
         }
       }
+
+      onCleanup(() => clearTimeout(this.timeoutId));
     });
 
     effect(() => {
