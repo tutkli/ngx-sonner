@@ -6,6 +6,11 @@ on:
       - master
   pull_request:
 
+env:
+  DOCS_APP_ARTIFACT_NAME: docs
+  DOCS_APP_PATH: dist/apps/docs/browser
+  NODE_OPTIONS: '--max-old-space-size=6144'
+
 permissions:
   actions: read
   contents: read
@@ -23,7 +28,7 @@ jobs:
       # - run: npx nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents-after="e2e-ci"
 
       # Cache node_modules
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
@@ -32,3 +37,102 @@ jobs:
 
       - run: npx nx-cloud record -- nx format:check
       - run: npx nx affected -t lint test build e2e-ci
+
+#  build:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version-file: .node-version
+#      - run: corepack enable
+#      - uses: actions/setup-node@v4
+#        with:
+#          cache: npm
+#          cache-dependency-path: '**/package-lock.json'
+#      - name: Install
+#        run: npm ci
+#      - name: Build
+#        run: npm run build
+#
+#  tests:
+#    runs-on: ubuntu-latest
+#    needs:
+#      - build
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: actions/setup-node@v3
+#        with:
+#          node-version-file: .node-version
+#      - run: corepack enable
+#      - uses: actions/setup-node@v3
+#        with:
+#          cache: npm
+#          cache-dependency-path: '**/package-lock.json'
+#      - name: Install
+#        run: npm ci
+#      - name: Test
+#        run: npm run tests:ci
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          cache: npm
+          cache-dependency-path: '**/package-lock.json'
+      - name: Install
+        run: npm ci
+      - name: Build
+        run: npx nx build docs --base-href=/ngx-sonner/
+      - name: Upload docs website
+        if: github.event_name == 'push' && github.ref_name == 'master'
+        uses: actions/upload-artifact@v4
+        with:
+          if-no-files-found: error
+          name: '${{ env.DOCS_APP_ARTIFACT_NAME }}'
+          path: '${{ env.DOCS_APP_PATH }}'
+          retention-days: 1
+
+  deploy-docs:
+    name: '[Merge] Deploy docs website'
+    needs:
+      - main
+      - docs
+    if: github.event_name == 'push' && github.ref_name == 'master'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: '${{ steps.deploy.outputs.page_url }}'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: |-
+        ${{ github.workflow }}-deploy-docs-${{
+          github.event_name == 'push'
+            && github.ref
+            || github.head_ref
+        }}
+      cancel-in-progress: "${{ github.event_name != 'push' }}"
+    steps:
+      - name: Download docs website
+        uses: actions/download-artifact@v4
+        with:
+          name: '${{ env.DOCS_APP_ARTIFACT_NAME }}'
+          path: '${{ env.DOCS_APP_PATH }}'
+      - name: Set up GitHub Pages
+        uses: actions/configure-pages@v4
+      - name: Upload GitHub Pages-compatible tarball
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '${{ env.DOCS_APP_PATH }}'
+      - name: Deploy docs website tarball
+        id: deploy
+        uses: actions/deploy-pages@v4
