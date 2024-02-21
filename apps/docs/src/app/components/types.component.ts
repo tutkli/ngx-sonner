@@ -34,16 +34,16 @@ export class TypeComponent {
   allTypes = [
     {
       name: 'Default',
-      snippet: "toast.create({message: 'Event has been created'})",
+      snippet: "toast('Event has been created')",
       action: () => toast('Event has been created'),
     },
     {
       name: 'Description',
-      snippet: `toast('Event has been created', {
+      snippet: `toast.message('Event has been created', {
   description: 'Monday, January 3rd at 6:00pm'
 })`,
       action: () =>
-        toast('Event has been created', {
+        toast.message('Event has been created', {
           description: 'Monday, January 3rd at 6:00pm',
         }),
     },
