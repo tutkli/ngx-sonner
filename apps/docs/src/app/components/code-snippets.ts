@@ -1,4 +1,4 @@
-export const usageSnippet = `import { SonnerService } from 'ngx-sonner';
+export const usageSnippet = `import { toast, ToastComponent } from 'ngx-sonner';
 
 @Component({
   selector: 'app-root',
@@ -6,9 +6,9 @@ export const usageSnippet = `import { SonnerService } from 'ngx-sonner';
   imports: [ToasterComponent],
   template: \`
     <ngx-sonner-toaster />
-    <button (click)="sonner.message('My first toast')">Give me a toast</button>
+    <button (click)="toast('My first toast')">Give me a toast</button>
   \`,
 })
 export class AppComponent {
-  protected readonly sonner = inject(SonnerService);
+  protected readonly toast = toast;
 }`;

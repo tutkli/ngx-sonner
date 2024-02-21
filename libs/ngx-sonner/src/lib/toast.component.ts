@@ -8,7 +8,6 @@ import {
   ViewChild,
   computed,
   effect,
-  inject,
   input,
   signal,
   untracked,
@@ -16,7 +15,7 @@ import {
 import { cn } from './internal/cn';
 import { AsComponentPipe } from './pipes/as-component.pipe';
 import { IsStringPipe } from './pipes/is-string.pipe';
-import { SonnerService } from './sonner.service';
+import { toastState } from './state';
 import { ToastClassnames, ToastProps } from './types';
 
 // Default lifetime of a toasts (in ms)
@@ -204,11 +203,13 @@ const defaultClasses: ToastClassnames = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToastComponent implements AfterViewInit, OnDestroy {
-  private readonly sonner = inject(SonnerService);
   protected readonly cn = cn;
 
-  toasts = this.sonner.toasts;
-  heights = this.sonner.heights;
+  toasts = toastState.toasts;
+  heights = toastState.heights;
+  removeHeight = toastState.removeHeight;
+  addHeight = toastState.addHeight;
+  dismiss = toastState.dismiss;
 
   toast = input.required<ToastProps['toast']>();
   index = input.required<ToastProps['index']>();
@@ -343,22 +344,22 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
     this.mounted.set(true);
     const height = this.toastRef.nativeElement.getBoundingClientRect().height;
     this.initialHeight.set(height);
-    this.sonner.addHeight({ toastId: this.toast().id, height });
+    this.addHeight({ toastId: this.toast().id, height });
   }
 
   ngOnDestroy() {
     clearTimeout(this.timeoutId);
-    this.sonner.removeHeight(this.toast().id);
+    this.removeHeight(this.toast().id);
   }
 
   deleteToast() {
     this.removed.set(true);
     this.offsetBeforeRemove.set(this.offset());
 
-    this.sonner.removeHeight(this.toast().id);
+    this.removeHeight(this.toast().id);
 
     setTimeout(() => {
-      this.sonner.dismiss(this.toast().id);
+      this.dismiss(this.toast().id);
     }, TIME_BEFORE_UNMOUNT);
   }
 

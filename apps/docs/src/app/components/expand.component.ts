@@ -3,11 +3,10 @@ import {
   Component,
   computed,
   EventEmitter,
-  inject,
   input,
   Output,
 } from '@angular/core';
-import { SonnerService } from 'ngx-sonner';
+import { toast } from 'ngx-sonner';
 import { CodeBlockComponent } from './code-block.component';
 
 @Component({
@@ -42,8 +41,6 @@ import { CodeBlockComponent } from './code-block.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExpandComponent {
-  private readonly sonner = inject(SonnerService);
-
   expand = input.required<boolean>();
   @Output() expandChange = new EventEmitter<boolean>();
 
@@ -52,14 +49,14 @@ export class ExpandComponent {
   );
 
   expandToasts() {
-    this.sonner.message('Event has been created', {
+    toast('Event has been created', {
       description: 'Monday, January 3rd at 6:00pm',
     });
     this.expandChange.emit(true);
   }
 
   collapseToasts() {
-    this.sonner.message('Event has been created', {
+    toast('Event has been created', {
       description: 'Monday, January 3rd at 6:00pm',
     });
     this.expandChange.emit(false);

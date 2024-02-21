@@ -1,10 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  signal,
-} from '@angular/core';
-import { SonnerService } from 'ngx-sonner';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { toast } from 'ngx-sonner';
 import { CodeBlockComponent } from './code-block.component';
 import { CustomComponent } from './custom.component';
 
@@ -36,54 +31,52 @@ import { CustomComponent } from './custom.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TypeComponent {
-  private readonly sonner = inject(SonnerService);
-
   allTypes = [
     {
       name: 'Default',
-      snippet: "this.sonner.create({message: 'Event has been created'})",
-      action: () => this.sonner.create({ message: 'Event has been created' }),
+      snippet: "toast.create({message: 'Event has been created'})",
+      action: () => toast('Event has been created'),
     },
     {
       name: 'Description',
-      snippet: `this.sonner.message('Event has been created', {
+      snippet: `toast('Event has been created', {
   description: 'Monday, January 3rd at 6:00pm'
 })`,
       action: () =>
-        this.sonner.message('Event has been created', {
+        toast('Event has been created', {
           description: 'Monday, January 3rd at 6:00pm',
         }),
     },
     {
       name: 'Success',
-      snippet: "this.sonner.success('Event has been created')",
-      action: () => this.sonner.success('Event has been created'),
+      snippet: "toast.success('Event has been created')",
+      action: () => toast.success('Event has been created'),
     },
     {
       name: 'Info',
-      snippet: "this.sonner.info('Event will be created')",
-      action: () => this.sonner.info('Event will be created'),
+      snippet: "toast.info('Event will be created')",
+      action: () => toast.info('Event will be created'),
     },
     {
       name: 'Warning',
-      snippet: "this.sonner.warning('Event has warnings')",
-      action: () => this.sonner.warning('Event has warnings'),
+      snippet: "toast.warning('Event has warnings')",
+      action: () => toast.warning('Event has warnings'),
     },
     {
       name: 'Error',
-      snippet: "this.sonner.error('Event has not been created')",
-      action: () => this.sonner.error('Event has not been created'),
+      snippet: "toast.error('Event has not been created')",
+      action: () => toast.error('Event has not been created'),
     },
     {
       name: 'Action',
-      snippet: `this.sonner.message('Event has been created', {
+      snippet: `toast('Event has been created', {
   action: {
     label: 'Undo',
     onClick: () => console.log('Undo'),
   },
 })`,
       action: () =>
-        this.sonner.message('Event has been created', {
+        toast('Event has been created', {
           action: {
             label: 'Undo',
             onClick: () => console.log('Undo'),
@@ -100,7 +93,7 @@ export class TypeComponent {
   }
 }, 1500));
 
-this.sonner.promise(promise, {
+toast.promise(promise, {
   loading: 'Loading...',
   success: (data) => {
     return data.name +  " toast has been added";
@@ -108,7 +101,7 @@ this.sonner.promise(promise, {
   error: 'Error... :( Try again!',
 });`,
       action: () =>
-        this.sonner.promise<{ name: string }>(
+        toast.promise<{ name: string }>(
           () =>
             new Promise(resolve =>
               setTimeout(() => {
@@ -126,15 +119,15 @@ this.sonner.promise(promise, {
     },
     {
       name: 'Loading',
-      snippet: "this.sonner.loading('Loading...')",
+      snippet: "toast.loading('Loading...')",
       action: () => {
-        this.sonner.loading('Loading...');
+        toast.loading('Loading...');
       },
     },
     {
       name: 'Custom',
-      snippet: `this.sonner.custom(CustomComponent)`,
-      action: () => this.sonner.custom(CustomComponent, { duration: 1000000 }),
+      snippet: `toast.custom(CustomComponent)`,
+      action: () => toast.custom(CustomComponent, { duration: 1000000 }),
     },
   ];
 

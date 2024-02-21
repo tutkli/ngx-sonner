@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { SonnerService } from 'ngx-sonner';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'docs-hero',
@@ -20,7 +20,7 @@ import { SonnerService } from 'ngx-sonner';
           data-testid="default-button"
           data-primary
           (click)="
-            sonner.message('Sonner', {
+            toast('Sonner', {
               description: 'An opinionated toast component for Angular.'
             })
           "
@@ -189,5 +189,5 @@ import { SonnerService } from 'ngx-sonner';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroComponent {
-  protected readonly sonner = inject(SonnerService);
+  protected readonly toast = toast;
 }

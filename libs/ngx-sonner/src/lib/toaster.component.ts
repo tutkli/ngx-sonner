@@ -19,7 +19,7 @@ import {
 import { IconComponent } from './icon.component';
 import { LoaderComponent } from './loader.component';
 import { ToastPositionPipe } from './pipes/toast-position.pipe';
-import { SonnerService } from './sonner.service';
+import { toastState } from './state';
 import { ToastComponent } from './toast.component';
 import { Position, ToasterProps } from './types';
 
@@ -106,11 +106,11 @@ const GAP = 14;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToasterComponent implements OnDestroy {
-  private readonly sonner = inject(SonnerService);
   private readonly platformId = inject(PLATFORM_ID);
 
-  toasts = this.sonner.toasts;
-  heights = this.sonner.heights;
+  toasts = toastState.toasts;
+  heights = toastState.heights;
+  reset = toastState.reset;
 
   invert = input<ToasterProps['invert'], unknown>(false, {
     transform: booleanAttribute,
@@ -185,7 +185,7 @@ export class ToasterComponent implements OnDestroy {
       }
     });
 
-    this.sonner.reset();
+    this.reset();
     document.addEventListener('keydown', this.handleKeydown);
 
     if (isPlatformBrowser(this.platformId)) {

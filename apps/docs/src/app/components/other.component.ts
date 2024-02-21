@@ -3,12 +3,11 @@ import {
   Component,
   computed,
   EventEmitter,
-  inject,
   input,
   Output,
   signal,
 } from '@angular/core';
-import { SonnerService } from 'ngx-sonner';
+import { toast } from 'ngx-sonner';
 import { CodeBlockComponent } from './code-block.component';
 import { TestWithInputsComponent } from './test-with-inputs.component';
 import { TestComponent } from './test.component';
@@ -40,8 +39,6 @@ import { TestComponent } from './test.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OtherComponent {
-  private readonly sonner = inject(SonnerService);
-
   closeButton = input.required<boolean>();
   @Output() closeButtonChange = new EventEmitter<boolean>();
 
@@ -51,43 +48,43 @@ export class OtherComponent {
   allTypes = [
     {
       name: 'Rich Colors Success',
-      snippet: "this.sonner.success('Event has been created')",
+      snippet: "toast.success('Event has been created')",
       action: () => {
-        this.sonner.success('Event has been created');
+        toast.success('Event has been created');
         this.richColorsChange.emit(true);
       },
     },
     {
       name: 'Rich Colors Error',
-      snippet: "this.sonner.error('Event has not been created')",
+      snippet: "toast.error('Event has not been created')",
       action: () => {
-        this.sonner.error('Event has not been created');
+        toast.error('Event has not been created');
         this.richColorsChange.emit(true);
       },
     },
     {
       name: 'Rich Colors Info',
-      snippet: "this.sonner.info('Info')",
+      snippet: "toast.info('Info')",
       action: () => {
-        this.sonner.info('Be at the area 10 minutes before the event time');
+        toast.info('Be at the area 10 minutes before the event time');
         this.richColorsChange.emit(true);
       },
     },
     {
       name: 'Rich Colors Warning',
-      snippet: "this.sonner.warning('Warning')",
+      snippet: "toast.warning('Warning')",
       action: () => {
-        this.sonner.warning('Event start time cannot be earlier than 8am');
+        toast.warning('Event start time cannot be earlier than 8am');
         this.richColorsChange.emit(true);
       },
     },
     {
       name: 'Close buttons',
-      snippet: `this.sonner.message('Event has been created', {
+      snippet: `toast('Event has been created', {
     description: 'Monday, January 3rd at 6:00pm',
   })`,
       action: () => {
-        this.sonner.message('Event has been created', {
+        toast('Event has been created', {
           description: 'Monday, January 3rd at 6:00pm',
         });
         this.closeButtonChange.emit(!this.closeButton());
@@ -95,30 +92,30 @@ export class OtherComponent {
     },
     {
       name: 'Headless',
-      snippet: `this.sonner.custom(HeadlessToast)
+      snippet: `toast.custom(HeadlessToast)
 
 // With props:
-this.sonner.custom(HeadlessToastComponent, {
+toast.custom(HeadlessToastComponent, {
   componentProps: {
     eventName: 'Louvre Museum'
   }
 })
   `,
       action: () => {
-        this.sonner.custom(TestComponent, {
+        toast.custom(TestComponent, {
           componentProps: { eventName: 'Louvre Museum' },
         });
       },
     },
     {
       name: 'Custom with properties',
-      snippet: `this.sonner.warning(TestWithInputsComponent, {
+      snippet: `toast.warning(TestWithInputsComponent, {
   componentProps: {
     message: 'This is <br />multiline message',
   }
 })`,
       action: () => {
-        this.sonner.warning(TestWithInputsComponent, {
+        toast.warning(TestWithInputsComponent, {
           componentProps: {
             message: 'This is <br />multiline message',
           },
@@ -134,7 +131,6 @@ this.sonner.custom(HeadlessToastComponent, {
 <ngx-sonner-toaster ${this.richColors() ? 'richColors' : ''} ${this.closeButton() ? 'closeButton' : ''} />
 
 // ts
-private readonly sonner = inject(SonnerService);
 ${this.activeType().snippet ?? ''}`
   );
 }

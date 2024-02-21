@@ -3,11 +3,10 @@ import {
   Component,
   computed,
   EventEmitter,
-  inject,
   input,
   Output,
 } from '@angular/core';
-import { SonnerService } from 'ngx-sonner';
+import { toast } from 'ngx-sonner';
 import { CodeBlockComponent } from './code-block.component';
 
 @Component({
@@ -34,8 +33,6 @@ import { CodeBlockComponent } from './code-block.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PositionComponent {
-  private readonly sonner = inject(SonnerService);
-
   positions = [
     'top-left',
     'top-center',
@@ -64,7 +61,7 @@ export class PositionComponent {
     // No need to show a toast when there is already one
     if (toastsAmount > 0 && position !== this.position()) return;
 
-    this.sonner.message('Event has been created', {
+    toast('Event has been created', {
       description: 'Monday, January 3rd at 6:00pm',
     });
   }
