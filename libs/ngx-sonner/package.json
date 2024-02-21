@@ -1,7 +1,7 @@
 {
   "name": "ngx-sonner",
   "description": "An opinionated toast component for Angular.",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "bugs": {
     "url": "https://github.com/tutkli/ngx-sonner/issues"
   },
