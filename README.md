@@ -22,7 +22,7 @@ Add `<ngx-sonner-toaster />` to your app, it will be the place where all your to
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ToasterComponent],
+  imports: [NgxSonnerToaster],
   template: `
     <ngx-sonner-toaster />
     <button (click)="sonner.message('My first toast')">Give me a toast</button>

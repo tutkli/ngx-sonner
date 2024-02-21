@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { Position, ToasterComponent } from 'ngx-sonner';
+import { Position, NgxSonnerToaster } from 'ngx-sonner';
 import { ExpandComponent } from './components/expand.component';
 import { FooterComponent } from './components/footer.component';
 import { HeroComponent } from './components/hero.component';
@@ -13,7 +13,7 @@ import { UsageComponent } from './components/usage.component';
   selector: 'docs-root',
   standalone: true,
   imports: [
-    ToasterComponent,
+    NgxSonnerToaster,
     HeroComponent,
     InstallationComponent,
     UsageComponent,

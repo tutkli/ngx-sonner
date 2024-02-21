@@ -105,7 +105,8 @@ const GAP = 14;
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ToasterComponent implements OnDestroy {
+// eslint-disable-next-line @angular-eslint/component-class-suffix
+export class NgxSonnerToaster implements OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
 
   toasts = toastState.toasts;
