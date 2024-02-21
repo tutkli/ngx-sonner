@@ -10,7 +10,7 @@ import { usageSnippet } from './code-snippets';
     <div>
       <h2>Usage</h2>
       <p>Render the toaster in the root of your app.</p>
-      <docs-code-block [code]="usageSnippet" language="javascript" />
+      <docs-code-block [code]="usageSnippet" />
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

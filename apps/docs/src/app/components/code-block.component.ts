@@ -132,7 +132,7 @@ hljs.registerLanguage('xml', xml);
 export class CodeBlockComponent {
   private readonly clipboard = inject(Clipboard);
 
-  autodetect = input(false);
+  autodetect = input(true);
   language = input('');
   ignoreIllegals = input(true);
   code = input.required<string>();
