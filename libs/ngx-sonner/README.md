@@ -16,39 +16,41 @@ yarn add ngx-sonner
 pnpm add ngx-sonner
 ```
 
-Add `<ngx-sonner-toaster />` to your app, it will be the place where all your toasts will be rendered. After that, you can use the `SonnerService` from anywhere in your app.
+Add `<ngx-sonner-toaster />` to your app, it will be the place where all your toasts will be rendered. After that, you can use `toast()` from anywhere in your app.
 
 ```ts
+import { toast, NgxSonnerToaster } from 'ngx-sonner';
+
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [NgxSonnerToaster],
   template: `
     <ngx-sonner-toaster />
-    <button (click)="sonner.message('My first toast')">Give me a toast</button>
+    <button (click)="toast('My first toast')">Give me a toast</button>
 `
 })
 export class AppComponent {
-  protected readonly sonner = inject(SonnerService);
+  protected readonly toast = toast;
 }
 ```
 
 ## Types
 
-### Message
+### Default
 
 Most basic toast. You can customize it (and any other type) by passing an options object as the second argument.
 
 ```ts
-this.sonner.message('Event has been created');
+toast('Event has been created');
 ```
 
 With custom icon and description:
 
-```js
-this.sonner.message('Event has been created', {
-	description: 'Monday, January 3rd at 6:00pm',
-	icon: IconComponent
+```ts
+toast('Event has been created', {
+  description: 'Monday, January 3rd at 6:00pm',
+  icon: IconComponent
 });
 ```
 
@@ -57,7 +59,7 @@ this.sonner.message('Event has been created', {
 Renders a checkmark icon in front of the message.
 
 ```ts
-this.sonner.success('Event has been created');
+toast.success('Event has been created');
 ```
 
 ### Info
@@ -65,7 +67,7 @@ this.sonner.success('Event has been created');
 Renders a question mark icon in front of the message.
 
 ```ts
-this.sonner.info('Event has new information');
+toast.info('Event has new information');
 ```
 
 ### Warning
@@ -73,7 +75,7 @@ this.sonner.info('Event has new information');
 Renders a warning icon in front of the message.
 
 ```ts
-this.sonner.warning('Event has warning');
+toast.warning('Event has warning');
 ```
 
 ### Error
@@ -81,7 +83,7 @@ this.sonner.warning('Event has warning');
 Renders an error icon in front of the message.
 
 ```ts
-this.sonner.error('Event has not been created');
+toast.error('Event has not been created');
 ```
 
 ### Action
@@ -89,11 +91,11 @@ this.sonner.error('Event has not been created');
 Renders a button.
 
 ```ts
-this.sonner.message('Event has been created', {
-	action: {
-		label: 'Undo',
-		onClick: () => console.log('Undo')
-	}
+toast('Event has been created', {
+  action: {
+    label: 'Undo',
+    onClick: () => console.log('Undo')
+  }
 });
 ```
 
@@ -102,22 +104,22 @@ this.sonner.message('Event has been created', {
 Starts in a loading state and will update automatically after the promise resolves or fails.
 
 ```ts
-this.sonner.promise(() => new Promise((resolve) => setTimeout(resolve, 2000)), {
-	loading: 'Loading',
-	success: 'Success',
-	error: 'Error'
+toast.promise(() => new Promise((resolve) => setTimeout(resolve, 2000)), {
+  loading: 'Loading',
+  success: 'Success',
+  error: 'Error'
 });
 ```
 
 You can pass a function to the success/error messages to incorporate the result/error of the promise.
 
-```js
-this.sonner.promise(promise, {
-	loading: 'Loading...',
-	success: (data) => {
-		return `${data.name} has been added!`;
-	},
-	error: 'Error'
+```ts
+toast.promise(promise, {
+  loading: 'Loading...',
+  success: (data) => {
+    return `${data.name} has been added!`;
+  },
+  error: 'Error'
 });
 ```
 
@@ -125,8 +127,8 @@ this.sonner.promise(promise, {
 
 You can pass a component as the first argument instead of a string to render custom component while maintaining default styling. You can use the headless version below for a custom, unstyled toast.
 
-```js
-this.sonner.message(CustomComponent);
+```ts
+toast(CustomComponent);
 ```
 
 ### Updating a toast
@@ -134,10 +136,10 @@ this.sonner.message(CustomComponent);
 You can update a toast by using the `toast` function and passing it the id of the toast you want to update, the rest stays the same.
 
 ```ts
-const toastId = this.sonner.message('Sonner');
+const toastId = toast('Sonner');
 
-this.sonner.success('Toast has been updated', {
-	id: toastId
+toast.success('Toast has been updated', {
+  id: toastId
 });
 ```
 
@@ -145,11 +147,9 @@ this.sonner.success('Toast has been updated', {
 
 ### Headless
 
-You can use `this.sonner.custom()` to render an unstyled toast with custom component while maintaining the functionality.
+You can use `toast.custom()` to render an unstyled toast with custom component while maintaining the functionality.
 
 ```ts
-import { EventEmitter } from '@angular/core';
-
 @Component({
   selector: 'app-custom',
   standalone: true,
@@ -169,7 +169,7 @@ export class CustomComponent {
 ```ts
 import { CustomComponent } from './custom.component';
 
-this.sonner.custom(CustomComponent);
+toast.custom(CustomComponent);
 ```
 
 ### Theme
@@ -205,7 +205,7 @@ Styling can be done globally via `toastOptions`, this way every toast will have 
 
 ```html
 <ngx-sonner-toaster
-	[toastOptions]="{
+  [toastOptions]="{
 		style: 'background: red;',
 		class: 'my-toast',
 		descriptionClass: 'my-toast-description'
@@ -213,13 +213,13 @@ Styling can be done globally via `toastOptions`, this way every toast will have 
 />
 ```
 
-You can also use the same props when using the `SonnerService` to style a specific toast.
+You can also use the same props when calling `toast` to style a specific toast.
 
 ```ts
-this.sonner.message('Event has been created', {
-	style: 'background: red;',
-	class: 'my-toast',
-	descriptionClass: 'my-toast-description'
+toast('Event has been created', {
+  style: 'background: red;',
+  class: 'my-toast',
+  descriptionClass: 'my-toast-description'
 });
 ```
 
@@ -229,7 +229,7 @@ The preferred way to style the toasts with tailwind is by using the `unstyled` p
 
 ```html
 <ngx-sonner-toaster
-	[toastOptions]="{
+  [toastOptions]="{
 		unstyled: true,
 		classes: {
 			toast: 'bg-blue-400',
@@ -243,18 +243,18 @@ The preferred way to style the toasts with tailwind is by using the `unstyled` p
 />
 ```
 
-You can do the same when using the `SonnerService`.
+You can do the same when calling `toast()`.
 
 ```ts
-this.sonner.message('Hello World', {
+toast('Hello World', {
   unstyled: true,
   classes: {
-		toast: 'bg-blue-400',
-		title: 'text-red-400 text-2xl',
-		description: 'text-red-400',
-		actionButton: 'bg-zinc-400',
-		cancelButton: 'bg-orange-400',
-		closeButton: 'bg-lime-400',
+    toast: 'bg-blue-400',
+    title: 'text-red-400 text-2xl',
+    description: 'text-red-400',
+    actionButton: 'bg-zinc-400',
+    cancelButton: 'bg-orange-400',
+    closeButton: 'bg-lime-400',
   },
 })
 ```
@@ -263,7 +263,7 @@ Styling per toast type is also possible.
 
 ```html
 <ngx-sonner-toaster
-	[toastOptions]="{
+  [toastOptions]="{
 		unstyled: true,
 		classes: {
 			error: 'bg-red-400',
@@ -301,18 +301,18 @@ Offset from the edges of the screen.
 
 ### Programmatically remove toast
 
-To remove a toast programmatically use `this.sonner.dismiss(id)`.
+To remove a toast programmatically use `toast.dismiss(id)`.
 
 ```ts
-const toastId = this.sonner.message('Event has been created');
+const toastId = toast('Event has been created');
 
-this.sonner.dismiss(toastId);
+toast.dismiss(toastId);
 ```
 
-You can also dismiss all toasts at once by calling `this.sonner.dismiss()` without an id.
+You can also dismiss all toasts at once by calling `toast.dismiss()` without an id.
 
 ```ts
-this.sonner.dismiss();
+toast.dismiss();
 ```
 
 ### Duration
@@ -324,12 +324,12 @@ You can change the duration of each toast by using the `duration` property, or c
 ```
 
 ```ts
-this.sonner.message('Event has been created', {
+toast('Event has been created', {
 	duration: 10000
 });
 
 // Persisent toast
-this.sonner.message('Event has been created', {
+toast('Event has been created', {
 	duration: Number.POSITIVE_INFINITY
 });
 ```
@@ -339,9 +339,9 @@ this.sonner.message('Event has been created', {
 You can pass `onDismiss` and `onAutoClose` callbacks. `onDismiss` gets fired when either the close button gets clicked or the toast is swiped. `onAutoClose` fires when the toast disappears automatically after it's timeout (`duration` prop).
 
 ```ts
-this.sonner.message('Event has been created', {
-	onDismiss: (t) => console.log(`Toast with id ${t.id} has been dismissed`),
-	onAutoClose: (t) => console.log(`Toast with id ${t.id} has been closed automatically`)
+toast('Event has been created', {
+  onDismiss: (t) => console.log(`Toast with id ${t.id} has been dismissed`),
+  onAutoClose: (t) => console.log(`Toast with id ${t.id} has been closed automatically`)
 });
 ```
 
