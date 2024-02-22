@@ -219,7 +219,7 @@ export class NgxSonnerToaster implements OnDestroy {
     ) {
       this.isFocusWithinRef.set(false);
       if (this.lastFocusedElementRef()) {
-        this.lastFocusedElementRef()!.focus({ preventScroll: true });
+        this.lastFocusedElementRef()?.focus({ preventScroll: true });
         this.lastFocusedElementRef.set(null);
       }
     }
@@ -242,7 +242,7 @@ export class NgxSonnerToaster implements OnDestroy {
     if (!this.listRef?.nativeElement) return;
 
     const isHotkeyPressed = this.hotKey().every(
-      key => (event as any)[key] || event.code === key
+      key => (event as never)[key] || event.code === key
     );
 
     if (isHotkeyPressed) {
