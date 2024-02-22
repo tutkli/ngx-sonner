@@ -21,7 +21,7 @@ import { LoaderComponent } from './loader.component';
 import { ToastPositionPipe } from './pipes/toast-position.pipe';
 import { toastState } from './state';
 import { ToastComponent } from './toast.component';
-import { Position, ToasterProps } from './types';
+import {Position, Theme, ToasterProps} from './types';
 
 // Default lifetime of a toasts (in ms)
 const TOAST_LIFETIME = 4000;
@@ -157,7 +157,7 @@ export class NgxSonnerToaster implements OnDestroy {
 
   expanded = signal(false);
   interacting = signal(false);
-  actualTheme = signal(this.getInitialTheme(this.theme()));
+  actualTheme = signal(this.getActualTheme(this.theme()));
 
   // viewChild<HTMLOListElement>('listRef');
   @ViewChild('listRef') listRef!: ElementRef<HTMLOListElement>;
@@ -180,12 +180,6 @@ export class NgxSonnerToaster implements OnDestroy {
   }));
 
   constructor() {
-    effect(() => {
-      if (this.toasts().length >= 1) {
-        untracked(() => this.expanded.set(false));
-      }
-    });
-
     this.reset();
     document.addEventListener('keydown', this.handleKeydown);
 
@@ -196,10 +190,14 @@ export class NgxSonnerToaster implements OnDestroy {
     }
 
     effect(() => {
-      const theme = this.theme();
-      if (theme !== 'system') {
-        untracked(() => this.actualTheme.set(theme));
+      if (this.toasts().length >= 1) {
+        untracked(() => this.expanded.set(false));
       }
+    });
+
+    effect(() => {
+      const theme = this.theme();
+      untracked(() => this.actualTheme.set(this.getActualTheme(theme)));
     });
   }
 
@@ -262,15 +260,17 @@ export class NgxSonnerToaster implements OnDestroy {
   };
 
   private handleThemePreferenceChange = ({ matches }: MediaQueryListEvent) => {
-    this.actualTheme.set(matches ? 'dark' : 'light');
+    if (this.theme() === 'system') {
+      this.actualTheme.set(matches ? 'dark' : 'light');
+    }
   };
 
-  private getInitialTheme(t: string) {
+  private getActualTheme(t: Theme) {
     if (t !== 'system') {
       return t;
     }
 
-    if (typeof window !== 'undefined') {
+    if (isPlatformBrowser(this.platformId)) {
       if (
         window.matchMedia &&
         window.matchMedia('(prefers-color-scheme: dark)').matches

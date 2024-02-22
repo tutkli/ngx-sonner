@@ -84,7 +84,7 @@ export enum SwipeStateTypes {
   NotSwiped = 'NotSwiped',
 }
 
-export type Theme = 'light' | 'dark';
+export type Theme = 'light' | 'dark' | 'system';
 
 export type ToastToDismiss = {
   id: number | string;
