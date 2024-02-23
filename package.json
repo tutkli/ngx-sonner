@@ -7,7 +7,7 @@
     "build": "nx run-many --target build --all --parallel=1",
     "prettify": "prettier --write .",
     "test": "nx test ngx-sonner",
-    "tests:ci": "nx test ngx-sonner --runInBand",
+    "tests:ci": "nx test ngx-sonner --runInBand --passWithNoTests",
     "prepublishOnly": "npm run build"
   },
   "private": true,
@@ -57,6 +57,8 @@
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
     "autoprefixer": "^10.4.0",
+    "conventional-changelog-angular": "^7.0.0",
+    "conventional-changelog-conventionalcommits": "^7.0.2",
     "eslint": "~8.48.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-playwright": "^0.15.3",
