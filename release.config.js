@@ -35,6 +35,12 @@ module.exports = {
       }
     ],
     [
+      '@semantic-release/exec',
+      {
+        prepareCmd: `VERSION=\${nextRelease.version} npx -p replace-json-property rjp ./package.json version \${nextRelease.version}`,
+      },
+    ],
+    [
       '@semantic-release/git',
       {
         assets: [`libs/**/package.json`, `package.json`, `CHANGELOG.md`],
