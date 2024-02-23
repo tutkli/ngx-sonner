@@ -5,12 +5,11 @@
   "scripts": {
     "start:docs": "nx serve docs",
     "build": "nx run-many --target build --all --parallel=1",
+    "build:lib": "nx build ngx-sonner",
     "prettify": "prettier --write .",
     "test": "nx test ngx-sonner",
-    "tests:ci": "nx test ngx-sonner --runInBand --passWithNoTests",
-    "prepublishOnly": "npm run build"
+    "tests:ci": "nx test ngx-sonner --runInBand --passWithNoTests"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "~17.1.0",
     "@angular/cdk": "^17.2.0",
