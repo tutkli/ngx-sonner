@@ -1,0 +1,31 @@
+name: Feature Request
+description: Request a new or improved a feature in ngx-sonner
+labels: [enhancement]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please search GitHub for a similar [issue](https://github.com/tutkli/ngx-sonner/issues) or [PR](https://github.com/tutkli/ngx-sonner/issues)  before submitting a new issue.
+
+  - type: textarea
+    id: information
+    attributes:
+      label: Information
+      description: Tell us what you want to be added to ngx-sonner
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Describe any alternatives/workarounds you're currently using
+
+  - type: checkboxes
+    id: assistance
+    attributes:
+      label: I would be willing to submit a PR to fix this issue
+      description: Assistance is provided if you need help submitting a pull request
+      options:
+        - label: 'Yes'
+        - label: 'No'
