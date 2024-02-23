@@ -14,6 +14,7 @@ module.exports = {
       { type: 'refactor', section: 'Refactoring' },
       { type: 'perf', hidden: true },
       { type: 'test', hidden: true },
+      { type: 'ci', hidden: true },
     ],
   },
   releaseRules: [{ type: 'refactor', release: 'patch' }],

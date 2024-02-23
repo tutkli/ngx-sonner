@@ -7,7 +7,8 @@
     "build": "nx run-many --target build --all --parallel=1",
     "prettify": "prettier --write .",
     "test": "nx test ngx-sonner",
-    "tests:ci": "nx test ngx-sonner --runInBand"
+    "tests:ci": "nx test ngx-sonner --runInBand",
+    "prepublishOnly": "npm run build"
   },
   "private": true,
   "dependencies": {
