@@ -113,26 +113,26 @@ export class NgxSonnerToaster implements OnDestroy {
   heights = toastState.heights;
   reset = toastState.reset;
 
-  invert = input<ToasterProps['invert'], unknown>(false, {
+  invert = input<ToasterProps['invert'], boolean | string>(false, {
     transform: booleanAttribute,
   });
   theme = input<ToasterProps['theme']>('light');
   position = input<ToasterProps['position']>('bottom-right');
   hotKey = input<ToasterProps['hotkey']>(['altKey', 'KeyT']);
-  richColors = input<ToasterProps['richColors'], unknown>(false, {
+  richColors = input<ToasterProps['richColors'], boolean | string>(false, {
     transform: booleanAttribute,
   });
-  expand = input<ToasterProps['expand'], unknown>(false, {
+  expand = input<ToasterProps['expand'], boolean | string>(false, {
     transform: booleanAttribute,
   });
-  duration = input<ToasterProps['duration'], unknown>(TOAST_LIFETIME, {
+  duration = input<ToasterProps['duration'], number | string>(TOAST_LIFETIME, {
     transform: numberAttribute,
   });
-  visibleToasts = input<ToasterProps['visibleToasts'], unknown>(
+  visibleToasts = input<ToasterProps['visibleToasts'], number | string>(
     VISIBLE_TOASTS_AMOUNT,
     { transform: numberAttribute }
   );
-  closeButton = input<ToasterProps['closeButton'], unknown>(false, {
+  closeButton = input<ToasterProps['closeButton'], boolean | string>(false, {
     transform: booleanAttribute,
   });
   toastOptions = input<ToasterProps['toastOptions']>({});
