@@ -4,6 +4,10 @@ An opinionated toast component for Angular.
 
 Based on [emilkowalski](https://github.com/emilkowalski)'s React [implementation](https://sonner.emilkowal.ski/).
 
+## Angular compatibility
+
+Make sure you are using Angular v17.2.0 or greater
+
 ## Quick start
 
 Install it:
