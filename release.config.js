@@ -41,6 +41,12 @@ module.exports = {
       },
     ],
     [
+      "@semantic-release/github",
+      {
+        "assets": ["dist/*.tgz"]
+      }
+    ],
+    [
       '@semantic-release/git',
       {
         assets: [`libs/**/package.json`, `package.json`, `CHANGELOG.md`],
