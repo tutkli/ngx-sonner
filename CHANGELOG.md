@@ -1,3 +1,10 @@
+## [0.3.2](https://github.com/tutkli/ngx-sonner/compare/v0.3.1...v0.3.2) (2024-02-26)
+
+
+### Bug Fixes
+
+* toaster input types ([58de5e0](https://github.com/tutkli/ngx-sonner/commit/58de5e0dc105fa908d0d6c635fef7b22e0ab7e57))
+
 ## [0.3.1](https://github.com/tutkli/ngx-sonner/compare/v0.3.0...v0.3.1) (2024-02-26)
 
 
