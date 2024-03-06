@@ -1,12 +1,16 @@
 import { render } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { toastState } from 'ngx-sonner';
-import { ToastTestComponent, ToastTestInputs } from './toast-test.component';
+import { noop } from 'rxjs';
+import {
+  ToasterTestComponent,
+  ToastTestInputs,
+} from './toaster-test.component';
 import { sleep } from './utils';
 
 async function setup(inputs: ToastTestInputs) {
   const user = userEvent.setup();
-  const returned = await render(ToastTestComponent, {
+  const returned = await render(ToasterTestComponent, {
     componentInputs: inputs,
     autoDetectChanges: true,
   });
@@ -19,7 +23,7 @@ async function setup(inputs: ToastTestInputs) {
   };
 }
 
-describe('Toast', () => {
+describe('Toaster', () => {
   beforeEach(() => {
     toastState.reset();
   });
@@ -185,7 +189,7 @@ describe('Toast', () => {
     expect(getByText('Finished loading!')).toBeVisible();
   });
 
-  it('should render a toast with custom class', async () => {
+  it('should render toast with custom class', async () => {
     const { user, trigger, container } = await setup({
       cb: toast =>
         toast('Hello world', {
@@ -199,5 +203,68 @@ describe('Toast', () => {
     const toast = container.querySelector('[data-sonner-toast]');
     expect(toast).not.toBeNull();
     expect(toast as Element).toHaveClass('test-class');
+  });
+
+  it('should render cancel button custom styles', async () => {
+    const { user, trigger, container } = await setup({
+      cb: toast =>
+        toast('Hello world', {
+          cancel: {
+            label: 'Cancel',
+          },
+          cancelButtonStyle: 'background-color: rgb(254, 226, 226)',
+        }),
+    });
+
+    await user.click(trigger);
+    const cancelButton = container.querySelector('[data-cancel]');
+    expect(cancelButton).not.toBeNull();
+    expect(cancelButton as Element).toHaveStyle(
+      'background-color: rgb(254, 226, 226)'
+    );
+  });
+
+  it('should render action button custom styles', async () => {
+    const { user, trigger, container } = await setup({
+      cb: toast =>
+        toast('Hello world', {
+          action: {
+            label: 'Do something',
+            onClick: noop,
+          },
+          actionButtonStyle: 'background-color: rgb(219, 239, 255)',
+        }),
+    });
+
+    await user.click(trigger);
+    const actionButton = container.querySelector('[data-button]');
+    expect(actionButton).not.toBeNull();
+    expect(actionButton as Element).toHaveStyle(
+      'background-color: rgb(219, 239, 255)'
+    );
+  });
+
+  it('should reflect toaster dir correctly', async () => {
+    const { user, trigger, container } = await setup({
+      cb: toast => toast('Hello world'),
+      dir: 'rtl',
+    });
+
+    await user.click(trigger);
+    const toaster = container.querySelector('[data-sonner-toaster]');
+    expect(toaster).not.toBeNull();
+    expect(toaster as Element).toHaveAttribute('dir', 'rtl');
+  });
+
+  it('should reflect toaster dark theme correctly', async () => {
+    const { user, trigger, container } = await setup({
+      cb: toast => toast('Hello world'),
+      theme: 'dark',
+    });
+
+    await user.click(trigger);
+    const toaster = container.querySelector('[data-sonner-toaster]');
+    expect(toaster).not.toBeNull();
+    expect(toaster as Element).toHaveAttribute('data-theme', 'dark');
   });
 });

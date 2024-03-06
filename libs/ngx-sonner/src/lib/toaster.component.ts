@@ -80,8 +80,16 @@ const GAP = 14;
                 [position]="position()"
                 [expandByDefault]="expand()"
                 [expanded]="expanded()"
-                [actionButtonStyle]="toastOptions().actionButtonStyle ?? ''"
-                [cancelButtonStyle]="toastOptions().cancelButtonStyle ?? ''"
+                [actionButtonStyle]="
+                  toastOptions().actionButtonStyle ??
+                  toast.actionButtonStyle ??
+                  ''
+                "
+                [cancelButtonStyle]="
+                  toastOptions().cancelButtonStyle ??
+                  toast.cancelButtonStyle ??
+                  ''
+                "
                 [class]="toastOptions().class ?? ''"
                 [descriptionClass]="toastOptions().descriptionClass ?? ''"
                 [classes]="toastOptions().classes ?? {}"
