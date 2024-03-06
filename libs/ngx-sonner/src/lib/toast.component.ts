@@ -3,14 +3,14 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
-  OnDestroy,
-  ViewChild,
   computed,
   effect,
+  ElementRef,
   input,
+  OnDestroy,
   signal,
   untracked,
+  ViewChild,
 } from '@angular/core';
 import { cn } from './internal/cn';
 import { AsComponentPipe } from './pipes/as-component.pipe';
@@ -241,7 +241,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
 
   classes: any = computed(() => ({
     ...defaultClasses,
-    ...this._classes,
+    ...this._classes(),
   }));
 
   isFront = computed(() => this.index() === 0);
