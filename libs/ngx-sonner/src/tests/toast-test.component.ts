@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, input} from "@angular/core";
-import {NgxSonnerToaster, toast} from "ngx-sonner";
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { NgxSonnerToaster, toast } from 'ngx-sonner';
 
 type ToastFn = (t: typeof toast) => void;
 
@@ -12,10 +12,10 @@ export type ToastTestInputs = {
   standalone: true,
   imports: [NgxSonnerToaster],
   template: `
-  <ngx-sonner-toaster />
-  <button data-testid="trigger" (click)="onClick()">Trigger</button>
+    <ngx-sonner-toaster />
+    <button data-testid="trigger" (click)="onClick()">Trigger</button>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToastTestComponent {
   cb = input.required<ToastTestInputs['cb']>();

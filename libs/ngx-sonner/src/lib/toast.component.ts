@@ -3,14 +3,14 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
-  OnDestroy,
-  ViewChild,
   computed,
   effect,
+  ElementRef,
   input,
+  OnDestroy,
   signal,
   untracked,
+  ViewChild,
 } from '@angular/core';
 import { cn } from './internal/cn';
 import { AsComponentPipe } from './pipes/as-component.pipe';
