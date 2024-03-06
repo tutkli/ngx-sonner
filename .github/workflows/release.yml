@@ -1,9 +1,7 @@
 name: Release
 
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
 
 env:
   DOCS_APP_ARTIFACT_NAME: docs
