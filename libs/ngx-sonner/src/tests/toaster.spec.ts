@@ -42,47 +42,19 @@ describe('Toaster', () => {
     expect(toasts.length).toBe(1);
   });
 
-  it('should render a toast that disappears after the default timeout', async () => {
-    const { user, trigger, container, detectChanges } = await setup({
+  it('should render a toast that disappears after the default duration', async () => {
+    const { user, trigger, queryByText, detectChanges } = await setup({
       cb: toast => toast('Hello world'),
     });
 
-    await user.click(trigger);
-    expect(
-      Array.from(container.querySelectorAll('[data-sonner-toast]')).length
-    ).toBe(1);
-    await sleep(4050);
-    detectChanges();
-    expect(
-      Array.from(container.querySelectorAll('[data-sonner-toast]')).length
-    ).toBe(1);
-  });
-
-  it('should show correct toast content based on promise state', async () => {
-    const { user, trigger, queryByText, getByText, detectChanges } =
-      await setup({
-        cb: toast =>
-          toast.promise<string>(
-            () =>
-              new Promise(resolve =>
-                setTimeout(() => {
-                  resolve('Loaded');
-                }, 2000)
-              ),
-            {
-              loading: 'Loading...',
-              success: data => data,
-              error: 'Error',
-            }
-          ),
-      });
+    expect(queryByText('Hello world')).toBeNull();
 
     await user.click(trigger);
-    expect(getByText('Loading...')).toBeVisible();
-    await sleep(2000);
+    expect(queryByText('Hello world')).not.toBeNull();
+
+    await sleep(4500);
     detectChanges();
-    expect(queryByText('Loading...')).toBeNull();
-    expect(getByText('Loaded')).toBeVisible();
+    expect(queryByText('Hello world')).toBeNull();
   });
 
   it('should show a toast with custom duration', async () => {
@@ -98,42 +70,6 @@ describe('Toaster', () => {
     await sleep(500);
     detectChanges();
     expect(queryByText('Hello world')).toBeNull();
-  });
-
-  it('should focus the toast when hotkey is pressed', async () => {
-    const { user, trigger, getByText } = await setup({
-      cb: toast => toast('Hello world', { duration: 5000 }),
-    });
-
-    await user.click(trigger);
-    expect(getByText('Hello world')).toBeVisible();
-
-    await user.keyboard('{Alt>}T{/Alt}');
-    await sleep(100);
-    expect(document.activeElement).toBeInstanceOf(HTMLOListElement);
-  });
-
-  it('should not immediately close the toast when reset', async () => {
-    const { user, trigger, getByText, queryByText, detectChanges } =
-      await setup({
-        cb: toast => {
-          const id = toast('Loading', { duration: 4000 });
-
-          setTimeout(() => {
-            toast.success('Finished loading!', { id });
-          }, 1000);
-        },
-      });
-
-    await user.click(trigger);
-    expect(getByText('Loading')).toBeVisible();
-    await sleep(2050);
-    detectChanges();
-    expect(queryByText('Loading')).toBeNull();
-    expect(getByText('Finished loading!')).toBeVisible();
-    await sleep(1000);
-    detectChanges();
-    expect(getByText('Finished loading!')).toBeVisible();
   });
 
   it('should reset duration on a toast update', async () => {
@@ -185,6 +121,69 @@ describe('Toaster', () => {
     expect(queryByText('Loading')).toBeNull();
     expect(getByText('Finished loading!')).toBeVisible();
     await sleep(2200);
+    detectChanges();
+    expect(getByText('Finished loading!')).toBeVisible();
+  });
+
+  it('should show correct toast content based on promise state', async () => {
+    const { user, trigger, queryByText, getByText, detectChanges } =
+      await setup({
+        cb: toast =>
+          toast.promise<string>(
+            () =>
+              new Promise(resolve =>
+                setTimeout(() => {
+                  resolve('Loaded');
+                }, 2000)
+              ),
+            {
+              loading: 'Loading...',
+              success: data => data,
+              error: 'Error',
+            }
+          ),
+      });
+
+    await user.click(trigger);
+    expect(getByText('Loading...')).toBeVisible();
+    await sleep(2000);
+    detectChanges();
+    expect(queryByText('Loading...')).toBeNull();
+    expect(getByText('Loaded')).toBeVisible();
+  });
+
+  it('should focus the toast when hotkey is pressed', async () => {
+    const { user, trigger, getByText } = await setup({
+      cb: toast => toast('Hello world', { duration: 5000 }),
+    });
+
+    await user.click(trigger);
+    expect(getByText('Hello world')).toBeVisible();
+
+    await user.keyboard('{Alt>}T{/Alt}');
+    await sleep(100);
+    expect(document.activeElement).toBeInstanceOf(HTMLOListElement);
+  });
+
+  it('should not immediately close the toast when reset', async () => {
+    const { user, trigger, getByText, queryByText, detectChanges } =
+      await setup({
+        cb: toast => {
+          const id = toast('Loading', { duration: 4000 });
+
+          setTimeout(() => {
+            toast.success('Finished loading!', { id });
+          }, 1000);
+        },
+      });
+
+    await user.click(trigger);
+    expect(getByText('Loading')).toBeVisible();
+    await sleep(2050);
+    detectChanges();
+    expect(queryByText('Loading')).toBeNull();
+    expect(getByText('Finished loading!')).toBeVisible();
+    await sleep(1000);
     detectChanges();
     expect(getByText('Finished loading!')).toBeVisible();
   });
