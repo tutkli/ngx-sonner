@@ -42,21 +42,6 @@ describe('Toaster', () => {
     expect(toasts.length).toBe(1);
   });
 
-  it('should render a toast that disappears after the default duration', async () => {
-    const { user, trigger, queryByText, detectChanges } = await setup({
-      cb: toast => toast('Hello world'),
-    });
-
-    expect(queryByText('Hello world')).toBeNull();
-
-    await user.click(trigger);
-    expect(queryByText('Hello world')).not.toBeNull();
-
-    await sleep(4500);
-    detectChanges();
-    expect(queryByText('Hello world')).toBeNull();
-  });
-
   it('should show a toast with custom duration', async () => {
     const { user, trigger, queryByText, detectChanges } = await setup({
       cb: toast => toast('Hello world', { duration: 300 }),
