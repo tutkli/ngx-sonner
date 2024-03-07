@@ -1,3 +1,13 @@
+## [0.3.4](https://github.com/tutkli/ngx-sonner/compare/v0.3.3...v0.3.4) (2024-03-07)
+
+
+### Bug Fixes
+
+* cleanup tests ([b241099](https://github.com/tutkli/ngx-sonner/commit/b241099e5d1c60f928aef361f4ce042feddbb945))
+* move toast buttons style condition to toast component ([1ca7986](https://github.com/tutkli/ngx-sonner/commit/1ca79865520dabef8444667ef06f9edb1d919832))
+* remove unused app ([e87c93c](https://github.com/tutkli/ngx-sonner/commit/e87c93c23aeab9c3d232878a010f713977ad188b))
+* toast button styles ([b2d6118](https://github.com/tutkli/ngx-sonner/commit/b2d6118218572a22e3fa6e93d0ed556f3b7f4c47))
+
 ## [0.3.3](https://github.com/tutkli/ngx-sonner/compare/v0.3.2...v0.3.3) (2024-03-06)
 
 
