@@ -21,7 +21,7 @@ import { LoaderComponent } from './loader.component';
 import { ToastPositionPipe } from './pipes/toast-position.pipe';
 import { toastState } from './state';
 import { ToastComponent } from './toast.component';
-import {Position, Theme, ToasterProps} from './types';
+import { Position, Theme, ToasterProps } from './types';
 
 // Default lifetime of a toasts (in ms)
 const TOAST_LIFETIME = 4000;
@@ -80,15 +80,15 @@ const GAP = 14;
                 [position]="position()"
                 [expandByDefault]="expand()"
                 [expanded]="expanded()"
-                [actionButtonStyle]="toastOptions().actionButtonStyle ?? ''"
-                [cancelButtonStyle]="toastOptions().cancelButtonStyle ?? ''"
+                [actionButtonStyle]="toastOptions().actionButtonStyle"
+                [cancelButtonStyle]="toastOptions().cancelButtonStyle"
                 [class]="toastOptions().class ?? ''"
                 [descriptionClass]="toastOptions().descriptionClass ?? ''"
                 [classes]="toastOptions().classes ?? {}"
                 [duration]="toastOptions().duration ?? duration()"
                 [unstyled]="toastOptions().unstyled ?? false">
                 <ngx-sonner-loader
-                  [visible]="toast.type === 'loading'"
+                  [isVisible]="toast.type === 'loading'"
                   loading-icon />
                 <ngx-sonner-icon type="success" success-icon />
                 <ngx-sonner-icon type="error" error-icon />

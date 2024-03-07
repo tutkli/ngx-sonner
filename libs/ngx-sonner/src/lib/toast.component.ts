@@ -182,7 +182,7 @@ const defaultClasses: ToastClassnames = {
           <button
             data-button
             data-cancel
-            [style]="cancelButtonStyle()"
+            [style]="cancelButtonStyle() ?? toast().cancelButtonStyle"
             [class]="cn(classes().cancelButton, toast().classes?.cancelButton)"
             (click)="onCancelClick()">
             {{ cancel.label }}
@@ -191,7 +191,7 @@ const defaultClasses: ToastClassnames = {
         @if (toast().action; as action) {
           <button
             data-button
-            [style]="actionButtonStyle()"
+            [style]="actionButtonStyle() ?? toast().actionButtonStyle"
             [class]="cn(classes().actionButton, toast().classes?.actionButton)"
             (click)="onActionClick($event)">
             {{ action.label }}
@@ -220,8 +220,8 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
   expandByDefault = input.required<ToastProps['expandByDefault']>();
   closeButton = input.required<ToastProps['closeButton']>();
   interacting = input.required<ToastProps['interacting']>();
-  cancelButtonStyle = input<ToastProps['cancelButtonStyle']>('');
-  actionButtonStyle = input<ToastProps['actionButtonStyle']>('');
+  cancelButtonStyle = input<ToastProps['cancelButtonStyle']>();
+  actionButtonStyle = input<ToastProps['actionButtonStyle']>();
   duration = input<ToastProps['duration']>(TOAST_LIFETIME);
   descriptionClass = input<ToastProps['descriptionClass']>('');
   _classes = input<ToastProps['classes']>({}, { alias: 'classes' });
