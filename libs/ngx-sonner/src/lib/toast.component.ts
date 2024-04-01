@@ -10,7 +10,7 @@ import {
   OnDestroy,
   signal,
   untracked,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import { cn } from './internal/cn';
 import { AsComponentPipe } from './pipes/as-component.pipe';
@@ -236,8 +236,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
   offsetBeforeRemove = signal(0);
   initialHeight = signal(0);
 
-  // viewChild.required<ElementRef<HTMLLIElement>>('toastRef')
-  @ViewChild('toastRef') toastRef!: ElementRef<HTMLLIElement>;
+  toastRef = viewChild.required<ElementRef<HTMLLIElement>>('toastRef');
 
   classes: any = computed(() => ({
     ...defaultClasses,
@@ -344,7 +343,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
     this.remainingTime =
       this.toast().duration ?? this.duration() ?? TOAST_LIFETIME;
     this.mounted.set(true);
-    const height = this.toastRef.nativeElement.getBoundingClientRect().height;
+    const height = this.toastRef().nativeElement.getBoundingClientRect().height;
     this.initialHeight.set(height);
     this.addHeight({ toastId: this.toast().id, height });
   }
@@ -408,8 +407,8 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
 
     this.pointerStartRef = null;
     const swipeAmount = Number(
-      this.toastRef.nativeElement.style
-        .getPropertyValue('--swipe-amount')
+      this.toastRef()
+        .nativeElement.style.getPropertyValue('--swipe-amount')
         .replace('px', '') || 0
     );
 
@@ -422,7 +421,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    this.toastRef.nativeElement.style.setProperty('--swipe-amount', '0px');
+    this.toastRef().nativeElement.style.setProperty('--swipe-amount', '0px');
     this.swiping.set(false);
   }
 
@@ -438,7 +437,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
     const isAllowedToSwipe = Math.abs(clampedY) > swipeStartThreshold;
 
     if (isAllowedToSwipe) {
-      this.toastRef.nativeElement.style.setProperty(
+      this.toastRef().nativeElement.style.setProperty(
         '--swipe-amount',
         `${yPosition}px`
       );

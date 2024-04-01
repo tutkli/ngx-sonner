@@ -8,7 +8,7 @@ import {
   inject,
   input,
   signal,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -138,7 +138,7 @@ export class CodeBlockComponent {
   code = input.required<string>();
   _class = input<string>('', { alias: 'class' });
 
-  @ViewChild('codeElement') codeElement!: ElementRef<HTMLElement>;
+  codeElement = viewChild.required<ElementRef<HTMLElement>>('codeElement');
 
   copying = signal(false);
   cannotDetectLanguage = computed(
@@ -168,9 +168,7 @@ export class CodeBlockComponent {
 
   constructor() {
     effect(() => {
-      if (this.codeElement?.nativeElement) {
-        this.codeElement.nativeElement.innerHTML = this.highlightedCode();
-      }
+      this.codeElement().nativeElement.innerHTML = this.highlightedCode();
     });
   }
 
