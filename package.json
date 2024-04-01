@@ -1,6 +1,6 @@
 {
   "name": "@ngx-sonner/source",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "license": "MIT",
   "scripts": {
     "start:docs": "nx serve docs",

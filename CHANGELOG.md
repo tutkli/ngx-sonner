@@ -1,3 +1,24 @@
+## [0.4.0](https://github.com/tutkli/ngx-sonner/compare/v0.3.4...v0.4.0) (2024-04-01)
+
+
+### Features
+
+* use new signal queries ([#4](https://github.com/tutkli/ngx-sonner/issues/4)) ([bde803e](https://github.com/tutkli/ngx-sonner/commit/bde803efb543fbbbc4a812d6ebc19d4c595cd04a))
+
+
+### Bug Fixes
+
+* blurry toasts ([#6](https://github.com/tutkli/ngx-sonner/issues/6)) ([5ba650c](https://github.com/tutkli/ngx-sonner/commit/5ba650c58ecf1fa1f839c85fe0ebe5e825a72f65))
+* preserve heights order when adding new toasts ([#8](https://github.com/tutkli/ngx-sonner/issues/8)) ([c7775a2](https://github.com/tutkli/ngx-sonner/commit/c7775a20f165bc39575afd599004e6cb3787859a))
+
+
+### Chores
+
+* remove nx cloud ([fe4a4d1](https://github.com/tutkli/ngx-sonner/commit/fe4a4d19c9b9d97f4af096e5bb909f04b0b0a777))
+* sync package-lock.json ([ead7f75](https://github.com/tutkli/ngx-sonner/commit/ead7f7597326b1f2ea166fab1fa4efe1821831f8))
+* sync package-lock.json ([bcf2f46](https://github.com/tutkli/ngx-sonner/commit/bcf2f468815d1974e621d4fd9e8918a39a8a0334))
+* update nx ([ddc83fa](https://github.com/tutkli/ngx-sonner/commit/ddc83fa76da51f9d85dd4c2aa7eeb1cf8c1f029f))
+
 ## [0.3.4](https://github.com/tutkli/ngx-sonner/compare/v0.3.3...v0.3.4) (2024-03-07)
 
 

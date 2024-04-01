@@ -13,12 +13,12 @@ import {
   PLATFORM_ID,
   signal,
   untracked,
-  ViewChild,
+  viewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import { IconComponent } from './icon.component';
 import { LoaderComponent } from './loader.component';
-import { ToastPositionPipe } from './pipes/toast-position.pipe';
+import { ToastFilterPipe } from './pipes/toast-filter.pipe';
 import { toastState } from './state';
 import { ToastComponent } from './toast.component';
 import { Position, Theme, ToasterProps } from './types';
@@ -41,7 +41,7 @@ const GAP = 14;
 @Component({
   selector: 'ngx-sonner-toaster',
   standalone: true,
-  imports: [ToastComponent, ToastPositionPipe, IconComponent, LoaderComponent],
+  imports: [ToastComponent, ToastFilterPipe, IconComponent, LoaderComponent],
   template: `
     @if (toasts().length > 0) {
       <section
@@ -67,7 +67,7 @@ const GAP = 14;
             (pointerup)="interacting.set(false)"
             [style]="toasterStyles()">
             @for (
-              toast of toasts() | toastPosition: $index : pos;
+              toast of toasts() | toastFilter: $index : pos;
               track toast.id
             ) {
               <ngx-sonner-toast
@@ -159,8 +159,7 @@ export class NgxSonnerToaster implements OnDestroy {
   interacting = signal(false);
   actualTheme = signal(this.getActualTheme(this.theme()));
 
-  // viewChild<HTMLOListElement>('listRef');
-  @ViewChild('listRef') listRef!: ElementRef<HTMLOListElement>;
+  listRef = viewChild<ElementRef<HTMLOListElement>>('listRef');
   lastFocusedElementRef = signal<HTMLElement | null>(null);
   isFocusWithinRef = signal(false);
 
@@ -239,7 +238,8 @@ export class NgxSonnerToaster implements OnDestroy {
   }
 
   private handleKeydown = (event: KeyboardEvent) => {
-    if (!this.listRef?.nativeElement) return;
+    const listRef = this.listRef()?.nativeElement;
+    if (!listRef) return;
 
     const isHotkeyPressed = this.hotKey().every(
       key => (event as never)[key] || event.code === key
@@ -247,13 +247,13 @@ export class NgxSonnerToaster implements OnDestroy {
 
     if (isHotkeyPressed) {
       this.expanded.set(true);
-      this.listRef.nativeElement?.focus();
+      listRef.focus();
     }
 
     if (
       event.code === 'Escape' &&
-      (document.activeElement === this.listRef.nativeElement ||
-        this.listRef.nativeElement?.contains(document.activeElement))
+      (document.activeElement === listRef ||
+        listRef.contains(document.activeElement))
     ) {
       this.expanded.set(false);
     }

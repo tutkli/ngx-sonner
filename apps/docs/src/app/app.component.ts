@@ -36,15 +36,9 @@ import { UsageComponent } from './components/usage.component';
         <docs-installation />
         <docs-usage />
         <docs-types />
-        <docs-position
-          [position]="position()"
-          (positionChange)="position.set($event)" />
-        <docs-expand [expand]="expand()" (expandChange)="expand.set($event)" />
-        <docs-other
-          [richColors]="richColors()"
-          (richColorsChange)="richColors.set($event)"
-          [closeButton]="closeButton()"
-          (closeButtonChange)="closeButton.set($event)" />
+        <docs-position [(position)]="position" />
+        <docs-expand [(expand)]="expand" />
+        <docs-other [(richColors)]="richColors" [(closeButton)]="closeButton" />
       </div>
     </main>
     <docs-footer />

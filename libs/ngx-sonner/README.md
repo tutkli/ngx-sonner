@@ -6,7 +6,7 @@ Based on [emilkowalski](https://github.com/emilkowalski)'s React [implementation
 
 ## Angular compatibility
 
-Make sure you are using Angular v17.2.0 or greater
+Make sure you are using Angular v17.3.0 or greater
 
 ## Quick start
 

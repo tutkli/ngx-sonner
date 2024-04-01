@@ -2,12 +2,21 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  EventEmitter,
-  input,
-  Output,
+  model,
 } from '@angular/core';
 import { toast } from 'ngx-sonner';
 import { CodeBlockComponent } from './code-block.component';
+
+const positions = [
+  'top-left',
+  'top-center',
+  'top-right',
+  'bottom-left',
+  'bottom-center',
+  'bottom-right',
+] as const;
+
+type Position = (typeof positions)[number];
 
 @Component({
   selector: 'docs-position',
@@ -33,36 +42,26 @@ import { CodeBlockComponent } from './code-block.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PositionComponent {
-  positions = [
-    'top-left',
-    'top-center',
-    'top-right',
-    'bottom-left',
-    'bottom-center',
-    'bottom-right',
-  ] as const;
+  protected positions = positions;
 
-  position = input.required<(typeof this.positions)[number]>();
-
-  @Output() positionChange = new EventEmitter<
-    (typeof this.positions)[number]
-  >();
+  position = model.required<Position>();
 
   positionSnippet = computed(
     () => `<ngx-sonner-toaster position="${this.position()}" />`
   );
 
-  showToast(position: (typeof this.positions)[number]) {
+  showToast(position: Position) {
     const toastsAmount = document.querySelectorAll(
       '[data-sonner-toast]'
     ).length;
-    this.positionChange.emit(position);
 
     // No need to show a toast when there is already one
-    if (toastsAmount > 0 && position !== this.position()) return;
+    if (toastsAmount === 0 || position === this.position()) {
+      toast('Event has been created', {
+        description: 'Monday, January 3rd at 6:00pm',
+      });
+    }
 
-    toast('Event has been created', {
-      description: 'Monday, January 3rd at 6:00pm',
-    });
+    this.position.set(position);
   }
 }

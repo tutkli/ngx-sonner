@@ -2,9 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  EventEmitter,
-  input,
-  Output,
+  model,
   signal,
 } from '@angular/core';
 import { toast } from 'ngx-sonner';
@@ -39,11 +37,8 @@ import { TestComponent } from './test.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OtherComponent {
-  closeButton = input.required<boolean>();
-  @Output() closeButtonChange = new EventEmitter<boolean>();
-
-  richColors = input.required<boolean>();
-  @Output() richColorsChange = new EventEmitter<boolean>();
+  closeButton = model.required<boolean>();
+  richColors = model.required<boolean>();
 
   allTypes = [
     {
@@ -51,7 +46,7 @@ export class OtherComponent {
       snippet: "toast.success('Event has been created')",
       action: () => {
         toast.success('Event has been created');
-        this.richColorsChange.emit(true);
+        this.richColors.set(true);
       },
     },
     {
@@ -59,7 +54,7 @@ export class OtherComponent {
       snippet: "toast.error('Event has not been created')",
       action: () => {
         toast.error('Event has not been created');
-        this.richColorsChange.emit(true);
+        this.richColors.set(true);
       },
     },
     {
@@ -67,7 +62,7 @@ export class OtherComponent {
       snippet: "toast.info('Info')",
       action: () => {
         toast.info('Be at the area 10 minutes before the event time');
-        this.richColorsChange.emit(true);
+        this.richColors.set(true);
       },
     },
     {
@@ -75,7 +70,7 @@ export class OtherComponent {
       snippet: "toast.warning('Warning')",
       action: () => {
         toast.warning('Event start time cannot be earlier than 8am');
-        this.richColorsChange.emit(true);
+        this.richColors.set(true);
       },
     },
     {
@@ -87,7 +82,7 @@ export class OtherComponent {
         toast('Event has been created', {
           description: 'Monday, January 3rd at 6:00pm',
         });
-        this.closeButtonChange.emit(!this.closeButton());
+        this.closeButton.set(!this.closeButton());
       },
     },
     {
