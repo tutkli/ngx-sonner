@@ -29,7 +29,6 @@ jobs:
       - name: Build
         run: npx nx build docs --base-href=/ngx-sonner/
       - name: Upload docs website
-        if: github.event_name == 'push' && github.ref_name == 'master'
         uses: actions/upload-artifact@v4
         with:
           if-no-files-found: error
