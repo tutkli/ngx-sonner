@@ -44,17 +44,17 @@ describe('Toaster', () => {
 
   it('should show a toast with custom duration', async () => {
     const { user, trigger, queryByText, detectChanges } = await setup({
-      cb: toast => toast('Hello world', { duration: 300 }),
+      cb: toast => toast('Custom duration', { duration: 300 }),
     });
 
-    expect(queryByText('Hello world')).toBeNull();
+    expect(queryByText('Custom duration')).toBeNull();
 
     await user.click(trigger);
-    expect(queryByText('Hello world')).not.toBeNull();
+    expect(queryByText('Custom duration')).not.toBeNull();
 
     await sleep(500);
     detectChanges();
-    expect(queryByText('Hello world')).toBeNull();
+    expect(queryByText('Custom duration')).toBeNull();
   });
 
   it('should reset duration on a toast update', async () => {
