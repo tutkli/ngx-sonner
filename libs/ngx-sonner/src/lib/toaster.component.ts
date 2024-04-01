@@ -18,7 +18,7 @@ import {
 } from '@angular/core';
 import { IconComponent } from './icon.component';
 import { LoaderComponent } from './loader.component';
-import { ToastPositionPipe } from './pipes/toast-position.pipe';
+import { ToastFilterPipe } from './pipes/toast-filter.pipe';
 import { toastState } from './state';
 import { ToastComponent } from './toast.component';
 import { Position, Theme, ToasterProps } from './types';
@@ -41,7 +41,7 @@ const GAP = 14;
 @Component({
   selector: 'ngx-sonner-toaster',
   standalone: true,
-  imports: [ToastComponent, ToastPositionPipe, IconComponent, LoaderComponent],
+  imports: [ToastComponent, ToastFilterPipe, IconComponent, LoaderComponent],
   template: `
     @if (toasts().length > 0) {
       <section
@@ -67,7 +67,7 @@ const GAP = 14;
             (pointerup)="interacting.set(false)"
             [style]="toasterStyles()">
             @for (
-              toast of toasts() | toastPosition: $index : pos;
+              toast of toasts() | toastFilter: $index : pos;
               track toast.id
             ) {
               <ngx-sonner-toast
