@@ -1,7 +1,7 @@
 {
   "name": "ngx-sonner",
   "description": "An opinionated toast component for Angular.",
-  "version": "0.3.0",
+  "version": "0.0.0",
   "bugs": {
     "url": "https://github.com/tutkli/ngx-sonner/issues"
   },
@@ -23,8 +23,8 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": ">=17.1.0",
-    "@angular/core": ">=17.1.0"
+    "@angular/common": ">=17.3.0",
+    "@angular/core": ">=17.3.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
