@@ -40,7 +40,6 @@ jobs:
     name: '[Merge] Deploy docs website'
     needs:
       - docs
-    if: github.event_name == 'push' && github.ref_name == 'master'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
