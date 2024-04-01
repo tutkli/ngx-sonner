@@ -2,9 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  EventEmitter,
-  input,
-  Output,
+  model,
 } from '@angular/core';
 import { toast } from 'ngx-sonner';
 import { CodeBlockComponent } from './code-block.component';
@@ -41,8 +39,7 @@ import { CodeBlockComponent } from './code-block.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExpandComponent {
-  expand = input.required<boolean>();
-  @Output() expandChange = new EventEmitter<boolean>();
+  expand = model.required<boolean>();
 
   expandSnippet = computed(
     () => `<ngx-sonner-toaster [expand]="${this.expand()}" />`
@@ -52,13 +49,13 @@ export class ExpandComponent {
     toast('Event has been created', {
       description: 'Monday, January 3rd at 6:00pm',
     });
-    this.expandChange.emit(true);
+    this.expand.set(true);
   }
 
   collapseToasts() {
     toast('Event has been created', {
       description: 'Monday, January 3rd at 6:00pm',
     });
-    this.expandChange.emit(false);
+    this.expand.set(false);
   }
 }

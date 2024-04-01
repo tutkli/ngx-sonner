@@ -1,9 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   input,
-  Output,
+  output,
 } from '@angular/core';
 
 @Component({
@@ -75,5 +74,5 @@ import {
 })
 export class TestComponent {
   eventName = input.required<string>();
-  @Output() closeToast = new EventEmitter<void>();
+  closeToast = output<void>();
 }
