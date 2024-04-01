@@ -169,8 +169,12 @@ function createToastState() {
   }
 
   function addHeight(height: HeightT) {
-    heights.update(prev => [height, ...prev]);
+    heights.update(prev => [height, ...prev].sort(sortHeights));
   }
+
+  const sortHeights = (a: HeightT, b: HeightT) =>
+    toasts().findIndex(t => t.id === a.toastId) -
+    toasts().findIndex(t => t.id === b.toastId);
 
   function reset() {
     toasts.set([]);
