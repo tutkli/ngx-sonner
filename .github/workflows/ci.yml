@@ -45,4 +45,4 @@ jobs:
       - name: Install
         run: npm ci
       - name: Test
-        run: npm run tests:ci
+        run: npm run test
