@@ -30,7 +30,7 @@ describe('Toaster', () => {
 
   it('should render a toast', async () => {
     const { user, trigger, container, getByText } = await setup({
-      cb: toast => toast('Hello world'),
+      callback: toast => toast('Hello world'),
     });
 
     await user.click(trigger);
@@ -44,7 +44,7 @@ describe('Toaster', () => {
 
   it('should show a toast with custom duration', async () => {
     const { user, trigger, queryByText, detectChanges } = await setup({
-      cb: toast => toast('Custom duration', { duration: 300 }),
+      callback: toast => toast('Custom duration', { duration: 300 }),
     });
 
     expect(queryByText('Custom duration')).toBeNull();
@@ -60,7 +60,7 @@ describe('Toaster', () => {
   it('should reset duration on a toast update', async () => {
     const { user, trigger, getByText, queryByText, detectChanges } =
       await setup({
-        cb: toast => {
+        callback: toast => {
           const id = toast('Loading', { duration: 2000 });
 
           setTimeout(() => {
@@ -90,7 +90,7 @@ describe('Toaster', () => {
   it('should allow duration updates on toast update', async () => {
     const { user, trigger, getByText, queryByText, detectChanges } =
       await setup({
-        cb: toast => {
+        callback: toast => {
           const id = toast('Loading', { duration: 2000 });
 
           setTimeout(() => {
@@ -113,7 +113,7 @@ describe('Toaster', () => {
   it('should show correct toast content based on promise state', async () => {
     const { user, trigger, queryByText, getByText, detectChanges } =
       await setup({
-        cb: toast =>
+        callback: toast =>
           toast.promise<string>(
             () =>
               new Promise(resolve =>
@@ -139,7 +139,7 @@ describe('Toaster', () => {
 
   it('should focus the toast when hotkey is pressed', async () => {
     const { user, trigger, getByText } = await setup({
-      cb: toast => toast('Hello world', { duration: 5000 }),
+      callback: toast => toast('Hello world', { duration: 5000 }),
     });
 
     await user.click(trigger);
@@ -153,7 +153,7 @@ describe('Toaster', () => {
   it('should not immediately close the toast when reset', async () => {
     const { user, trigger, getByText, queryByText, detectChanges } =
       await setup({
-        cb: toast => {
+        callback: toast => {
           const id = toast('Loading', { duration: 4000 });
 
           setTimeout(() => {
@@ -175,7 +175,7 @@ describe('Toaster', () => {
 
   it('should render toast with custom class', async () => {
     const { user, trigger, container } = await setup({
-      cb: toast =>
+      callback: toast =>
         toast('Hello world', {
           classes: {
             toast: 'test-class',
@@ -191,7 +191,7 @@ describe('Toaster', () => {
 
   it('should render cancel button custom styles', async () => {
     const { user, trigger, container } = await setup({
-      cb: toast =>
+      callback: toast =>
         toast('Hello world', {
           cancel: {
             label: 'Cancel',
@@ -210,7 +210,7 @@ describe('Toaster', () => {
 
   it('should render action button custom styles', async () => {
     const { user, trigger, container } = await setup({
-      cb: toast =>
+      callback: toast =>
         toast('Hello world', {
           action: {
             label: 'Do something',
@@ -230,7 +230,7 @@ describe('Toaster', () => {
 
   it('should reflect toaster dir correctly', async () => {
     const { user, trigger, container } = await setup({
-      cb: toast => toast('Hello world'),
+      callback: toast => toast('Hello world'),
       dir: 'rtl',
     });
 
@@ -242,7 +242,7 @@ describe('Toaster', () => {
 
   it('should reflect toaster dark theme correctly', async () => {
     const { user, trigger, container } = await setup({
-      cb: toast => toast('Hello world'),
+      callback: toast => toast('Hello world'),
       theme: 'dark',
     });
 
@@ -250,5 +250,27 @@ describe('Toaster', () => {
     const toaster = container.querySelector('[data-sonner-toaster]');
     expect(toaster).not.toBeNull();
     expect(toaster as Element).toHaveAttribute('data-theme', 'dark');
+  });
+
+  it('should show close button correctly', async () => {
+    const { user, trigger, container } = await setup({
+      callback: toast => toast('Hello world'),
+      closeButton: true,
+    });
+
+    await user.click(trigger);
+    const closeButton = container.querySelector('[data-close-button]');
+    expect(closeButton).not.toBeNull();
+  });
+
+  it('should not show close button if the toast is not dismissable', async () => {
+    const { user, trigger, container } = await setup({
+      callback: toast => toast('Hello world', { dismissable: false }),
+      closeButton: true,
+    });
+
+    await user.click(trigger);
+    const closeButton = container.querySelector('[data-close-button]');
+    expect(closeButton).toBeNull();
   });
 });
