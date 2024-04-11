@@ -33,16 +33,16 @@ jobs:
     needs:
       - build
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
       - run: corepack enable
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           cache: npm
           cache-dependency-path: '**/package-lock.json'
       - name: Install
         run: npm ci
       - name: Test
-        run: npm run tests:ci
+        run: npm run test
