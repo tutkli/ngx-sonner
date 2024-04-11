@@ -1,3 +1,10 @@
+## [0.4.1](https://github.com/tutkli/ngx-sonner/compare/v0.4.0...v0.4.1) (2024-04-11)
+
+
+### Bug Fixes
+
+* hide close button on non dimissable toasts ([#12](https://github.com/tutkli/ngx-sonner/issues/12)) ([3d1b31a](https://github.com/tutkli/ngx-sonner/commit/3d1b31aa7071590f5b88b84fe06c086c9ef5260a))
+
 ## [0.4.0](https://github.com/tutkli/ngx-sonner/compare/v0.3.4...v0.4.0) (2024-04-01)
 
 
