@@ -78,7 +78,7 @@ const defaultClasses: ToastClassnames = {
       (pointerdown)="onPointerDown($event)"
       (pointerup)="onPointerUp()"
       (pointermove)="onPointerMove($event)">
-      @if (closeButton() && !toast().component) {
+      @if (toast().dismissable && closeButton() && !toast().component) {
         <button
           aria-label="Close toast"
           [attr.data-disabled]="disabled()"
