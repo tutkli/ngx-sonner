@@ -263,9 +263,9 @@ describe('Toaster', () => {
     expect(closeButton).not.toBeNull();
   });
 
-  it('should not show close button if the toast is not dismissable', async () => {
+  it('should not show close button if the toast is not dismissible', async () => {
     const { user, trigger, container } = await setup({
-      callback: toast => toast('Hello world', { dismissable: false }),
+      callback: toast => toast('Hello world', { dismissible: false }),
       closeButton: true,
     });
 

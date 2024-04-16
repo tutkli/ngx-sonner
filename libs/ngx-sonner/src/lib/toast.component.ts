@@ -70,6 +70,7 @@ const defaultClasses: ToastClassnames = {
       [attr.data-index]="index()"
       [attr.data-front]="isFront()"
       [attr.data-swiping]="swiping()"
+      [attr.data-dismissible]="toast().dismissible"
       [attr.data-type]="toastType()"
       [attr.data-invert]="invert()"
       [attr.data-swipe-out]="swipeOut()"
@@ -78,7 +79,7 @@ const defaultClasses: ToastClassnames = {
       (pointerdown)="onPointerDown($event)"
       (pointerup)="onPointerUp()"
       (pointermove)="onPointerMove($event)">
-      @if (toast().dismissable && closeButton() && !toast().component) {
+      @if (toast().dismissible && closeButton() && !toast().component) {
         <button
           aria-label="Close toast"
           [attr.data-disabled]="disabled()"
@@ -389,7 +390,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
   }
 
   onPointerDown(event: PointerEvent) {
-    if (this.disabled()) return;
+    if (this.disabled() || !this.toast().dismissible) return;
 
     this.offsetBeforeRemove.set(this.offset());
     const target = event.target as HTMLElement;
@@ -403,7 +404,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
   }
 
   onPointerUp() {
-    if (this.swipeOut()) return;
+    if (this.swipeOut() || !this.toast().dismissible) return;
 
     this.pointerStartRef = null;
     const swipeAmount = Number(
@@ -426,7 +427,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
   }
 
   onPointerMove(event: PointerEvent) {
-    if (!this.pointerStartRef) return;
+    if (!this.pointerStartRef || !this.toast().dismissible) return;
 
     const yPosition = event.clientY - this.pointerStartRef.y;
     const xPosition = event.clientX - this.pointerStartRef.x;
@@ -449,14 +450,15 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
   }
 
   onCloseButtonClick() {
-    if (this.disabled()) return;
+    if (this.disabled() || !this.toast().dismissible) return;
     this.deleteToast();
     this.toast().onDismiss?.(this.toast());
   }
 
   onCancelClick() {
-    this.deleteToast();
     const toast = this.toast();
+    if (!toast.dismissible) return;
+    this.deleteToast();
     if (toast.cancel?.onClick) {
       toast.cancel.onClick();
     }
