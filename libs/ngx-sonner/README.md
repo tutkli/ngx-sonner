@@ -197,7 +197,7 @@ toast(CustomComponent);
 
 #### Headless
 
-You can use `toast.custom()` to render an unstyled toast with custom component while maintaining the functionality.
+You can use `toast.custom()` to render an unstyled toast with a custom component while maintaining the functionality.
 
 ```ts
 @Component({
@@ -340,12 +340,12 @@ You can change the duration of each toast by using the `duration` property, or c
 
 ```ts
 toast('Event has been created', {
-	duration: 10000
+  duration: 10000
 });
 
 // Persisent toast
 toast('Event has been created', {
-	duration: Number.POSITIVE_INFINITY
+  duration: Number.POSITIVE_INFINITY
 });
 ```
 

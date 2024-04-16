@@ -197,7 +197,7 @@ toast(CustomComponent);
 
 #### Headless
 
-You can use `toast.custom()` to render an unstyled toast with custom component while maintaining the functionality.
+You can use `toast.custom()` to render an unstyled toast with a custom component while maintaining the functionality.
 
 ```ts
 @Component({
