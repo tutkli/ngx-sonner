@@ -1,3 +1,23 @@
+## [1.0.0](https://github.com/tutkli/ngx-sonner/compare/v0.4.2...v1.0.0) (2024-04-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* toast dissmisable field has been renamed to dismissible
+
+### Features
+
+* add closeButton property to toast options ([#17](https://github.com/tutkli/ngx-sonner/issues/17)) ([da3fdda](https://github.com/tutkli/ngx-sonner/commit/da3fdda0ab19c4b2bc15443f4f4656237c40f74e))
+
+
+### Bug Fixes
+
+* check toast dismissible value in toaster ([31bfc7b](https://github.com/tutkli/ngx-sonner/commit/31bfc7b539e4adad490075ad71bfdf782f3d27c9))
+* dismissable renamed to dismissible ([8e30c20](https://github.com/tutkli/ngx-sonner/commit/8e30c203036db4ed26523fd33761ebf573fb2e02))
+* dismissable renamed to dismissible ([a162a3f](https://github.com/tutkli/ngx-sonner/commit/a162a3f7b09db0df6bec1deb0f7ed879748d6b01))
+* don't allow to swipe out a toast if it's not dismissible ([9502c43](https://github.com/tutkli/ngx-sonner/commit/9502c43602db965d2aa0f09b9e62925c7b1e3fc3))
+* remove console log ([42a940b](https://github.com/tutkli/ngx-sonner/commit/42a940b522407328cba47f0bb70227797b483a75))
+
 ## [0.4.2](https://github.com/tutkli/ngx-sonner/compare/v0.4.1...v0.4.2) (2024-04-16)
 
 
