@@ -302,10 +302,6 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
 
   constructor() {
     effect(() => {
-      console.log(this.toast().dismissible);
-    });
-
-    effect(() => {
       const heightIndex = this.heightIndex();
       const toastsHeightBefore = this.toastsHeightBefore();
       untracked(() =>
