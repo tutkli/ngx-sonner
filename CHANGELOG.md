@@ -1,3 +1,10 @@
+## [0.4.2](https://github.com/tutkli/ngx-sonner/compare/v0.4.1...v0.4.2) (2024-04-16)
+
+
+### Bug Fixes
+
+* access document only in browser ([#15](https://github.com/tutkli/ngx-sonner/issues/15)) ([308a56a](https://github.com/tutkli/ngx-sonner/commit/308a56a0c5cb383a7f6d61997a25b5549acd2a6c))
+
 ## [0.4.1](https://github.com/tutkli/ngx-sonner/compare/v0.4.0...v0.4.1) (2024-04-11)
 
 
