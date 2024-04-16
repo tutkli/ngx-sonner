@@ -180,9 +180,9 @@ export class NgxSonnerToaster implements OnDestroy {
 
   constructor() {
     this.reset();
-    document.addEventListener('keydown', this.handleKeydown);
 
     if (isPlatformBrowser(this.platformId)) {
+      document.addEventListener('keydown', this.handleKeydown);
       window
         .matchMedia('(prefers-color-scheme: dark)')
         .addEventListener('change', this.handleThemePreferenceChange);
@@ -201,8 +201,8 @@ export class NgxSonnerToaster implements OnDestroy {
   }
 
   ngOnDestroy() {
-    document.removeEventListener('keydown', this.handleKeydown);
     if (isPlatformBrowser(this.platformId)) {
+      document.removeEventListener('keydown', this.handleKeydown);
       window
         .matchMedia('(prefers-color-scheme: dark)')
         .removeEventListener('change', this.handleThemePreferenceChange);
