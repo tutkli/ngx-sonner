@@ -13,37 +13,17 @@ import {
   viewChild,
 } from '@angular/core';
 import { cn } from './internal/cn';
+import {
+  defaultClasses,
+  GAP,
+  SWIPE_THRESHOLD,
+  TIME_BEFORE_UNMOUNT,
+  TOAST_LIFETIME,
+} from './internal/constants';
 import { AsComponentPipe } from './pipes/as-component.pipe';
 import { IsStringPipe } from './pipes/is-string.pipe';
 import { toastState } from './state';
-import { ToastClassnames, ToastProps } from './types';
-
-// Default lifetime of a toasts (in ms)
-const TOAST_LIFETIME = 4000;
-
-// Default gap between toasts
-const GAP = 14;
-
-const SWIPE_THRESHOLD = 20;
-
-const TIME_BEFORE_UNMOUNT = 200;
-
-const defaultClasses: ToastClassnames = {
-  toast: '',
-  title: '',
-  description: '',
-  loader: '',
-  closeButton: '',
-  cancelButton: '',
-  actionButton: '',
-  action: '',
-  warning: '',
-  error: '',
-  success: '',
-  default: '',
-  info: '',
-  loading: '',
-};
+import { ToastProps } from './types';
 
 @Component({
   selector: 'ngx-sonner-toast',

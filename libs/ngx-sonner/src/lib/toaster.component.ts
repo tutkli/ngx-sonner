@@ -17,26 +17,18 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { IconComponent } from './icon.component';
+import {
+  GAP,
+  TOAST_LIFETIME,
+  TOAST_WIDTH,
+  VIEWPORT_OFFSET,
+  VISIBLE_TOASTS_AMOUNT,
+} from './internal/constants';
 import { LoaderComponent } from './loader.component';
 import { ToastFilterPipe } from './pipes/toast-filter.pipe';
 import { toastState } from './state';
 import { ToastComponent } from './toast.component';
 import { Position, Theme, ToasterProps } from './types';
-
-// Default lifetime of a toasts (in ms)
-const TOAST_LIFETIME = 4000;
-
-// Visible toasts amount
-const VISIBLE_TOASTS_AMOUNT = 3;
-
-// Viewport padding
-const VIEWPORT_OFFSET = '32px';
-
-// Default toast width
-const TOAST_WIDTH = 356;
-
-// Default gap between toasts
-const GAP = 14;
 
 @Component({
   selector: 'ngx-sonner-toaster',
