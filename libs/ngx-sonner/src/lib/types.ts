@@ -35,9 +35,9 @@ export type ToastT = {
   component?: Type<unknown>;
   componentProps?: Record<string, unknown>;
   invert?: boolean;
+  closeButton?: boolean;
+  dismissible?: boolean;
   description?: string | Type<unknown>;
-  cancelButtonStyle?: string;
-  actionButtonStyle?: string;
   duration?: number;
   delete?: boolean;
   important?: boolean;
@@ -51,16 +51,17 @@ export type ToastT = {
   };
   onDismiss?: (toast: ToastT) => void;
   onAutoClose?: (toast: ToastT) => void;
-  dismissible?: boolean;
   promise?: PromiseT;
+  cancelButtonStyle?: string;
+  actionButtonStyle?: string;
   style?: Record<string, unknown>;
+  unstyled?: boolean;
   class?: string;
   classes?: ToastClassnames;
   descriptionClass?: string;
   position?: Position;
-  unstyled?: boolean;
   /**
-   * @internal This is used to determine if the toast has been updated to determine when to reset timer. Hacky but works.
+   * @internal This is used to determine if the toast has been updated to determine when to reset timer.
    */
   updated?: boolean;
 };

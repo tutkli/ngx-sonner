@@ -79,7 +79,7 @@ const defaultClasses: ToastClassnames = {
       (pointerdown)="onPointerDown($event)"
       (pointerup)="onPointerUp()"
       (pointermove)="onPointerMove($event)">
-      @if (toast().dismissible && closeButton() && !toast().component) {
+      @if (closeButton() && !toast().component) {
         <button
           aria-label="Close toast"
           [attr.data-disabled]="disabled()"
@@ -219,7 +219,9 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
   position = input.required<ToastProps['position']>();
   visibleToasts = input.required<ToastProps['visibleToasts']>();
   expandByDefault = input.required<ToastProps['expandByDefault']>();
-  closeButton = input.required<ToastProps['closeButton']>();
+  _closeButton = input.required<ToastProps['closeButton']>({
+    alias: 'closeButton',
+  });
   interacting = input.required<ToastProps['interacting']>();
   cancelButtonStyle = input<ToastProps['cancelButtonStyle']>();
   actionButtonStyle = input<ToastProps['actionButtonStyle']>();
@@ -268,6 +270,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
     }, 0)
   );
   invert = computed(() => this.toast().invert ?? this._invert());
+  closeButton = computed(() => this.toast().closeButton ?? this._closeButton());
   disabled = computed(() => this.toastType() === 'loading');
 
   timeoutId: ReturnType<typeof setTimeout> | undefined;

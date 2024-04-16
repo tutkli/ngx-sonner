@@ -263,14 +263,25 @@ describe('Toaster', () => {
     expect(closeButton).not.toBeNull();
   });
 
-  it('should not show close button if the toast is not dismissible', async () => {
+  it('should not show close button if the toast has closeButton false', async () => {
     const { user, trigger, container } = await setup({
-      callback: toast => toast('Hello world', { dismissible: false }),
+      callback: toast => toast('Hello world', { closeButton: false }),
       closeButton: true,
     });
 
     await user.click(trigger);
     const closeButton = container.querySelector('[data-close-button]');
     expect(closeButton).toBeNull();
+  });
+
+  it('should show close button if the toast has closeButton true', async () => {
+    const { user, trigger, container } = await setup({
+      callback: toast => toast('Hello world', { closeButton: true }),
+      closeButton: false,
+    });
+
+    await user.click(trigger);
+    const closeButton = container.querySelector('[data-close-button]');
+    expect(closeButton).not.toBeNull();
   });
 });
