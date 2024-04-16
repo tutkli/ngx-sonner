@@ -63,7 +63,7 @@ const GAP = 14;
             (mouseenter)="expanded.set(true)"
             (mousemove)="expanded.set(true)"
             (mouseleave)="handleMouseLeave()"
-            (pointerdown)="interacting.set(true)"
+            (pointerdown)="handlePointerDown($event)"
             (pointerup)="interacting.set(false)"
             [style]="toasterStyles()">
             @for (
@@ -225,10 +225,25 @@ export class NgxSonnerToaster implements OnDestroy {
   }
 
   handleFocus(event: FocusEvent) {
+    const isNotDismissible =
+      event.target instanceof HTMLElement &&
+      event.target.dataset['dismissible'] === 'false';
+
+    if (isNotDismissible) return;
+
     if (!this.isFocusWithinRef()) {
       this.isFocusWithinRef.set(true);
       this.lastFocusedElementRef.set(event.relatedTarget as HTMLElement);
     }
+  }
+
+  handlePointerDown(event: MouseEvent) {
+    const isNotDismissible =
+      event.target instanceof HTMLElement &&
+      event.target.dataset['dismissible'] === 'false';
+
+    if (isNotDismissible) return;
+    this.interacting.set(true);
   }
 
   handleMouseLeave() {
