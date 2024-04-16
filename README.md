@@ -10,7 +10,7 @@ Make sure you are using Angular v17.3.0 or greater
 
 ## Quick start
 
-Install it:
+Install it with your favorite package manager:
 
 ```bash
 npm i ngx-sonner
@@ -18,6 +18,8 @@ npm i ngx-sonner
 yarn add ngx-sonner
 # or
 pnpm add ngx-sonner
+# or
+bun add ngx-sonner
 ```
 
 Add `<ngx-sonner-toaster />` to your app, it will be the place where all your toasts will be rendered. After that, you can use `toast()` from anywhere in your app.
@@ -39,9 +41,45 @@ export class AppComponent {
 }
 ```
 
-## Types
+## Table of contents
 
-### Default
+- [toast()](#toast)
+  - [Creating toasts](#creating-toasts)
+    - [Default](#default)
+    - [Success](#success)
+    - [Info](#info)
+    - [Warning](#warning)
+    - [Error](#error)
+    - [Action](#action)
+    - [Cancel](#cancel)
+    - [Promise](#promise)
+    - [Loading](#loading)
+    - [Custom component](#custom-component)
+    - [Headless](#headless)
+    - [Dynamic position](#dynamic-position)
+  - [Other](#other)
+    - [Updating a toast](#updating-a-toast)
+    - [On Close Callback](#on-close-callback)
+    - [Dismissing toasts programmatically](#dismissing-toasts-programmatically)
+- [Toaster](#toaster)
+  - [Theme](#theme)
+  - [Position](#position)
+  - [Expand](#expand)
+  - [Close button](#close-button)
+  - [Rich colors](#rich-colors)
+  - [Custom offset](#custom-offset)
+  - [Duration](#duration)
+  - [Keyboard focus](#keyboard-focus)
+- [Styling](#styling)
+  - [TailwindCSS](#tailwind-css)
+
+## toast()
+
+Use it to render a toast. You can call it from anywhere, even outside of React.
+
+### Creating toasts
+
+#### Default
 
 Most basic toast. You can customize it (and any other type) by passing an options object as the second argument.
 
@@ -53,12 +91,12 @@ With custom icon and description:
 
 ```ts
 toast('Event has been created', {
-	description: 'Monday, January 3rd at 6:00pm',
-	icon: IconComponent
+  description: 'Monday, January 3rd at 6:00pm',
+  icon: IconComponent
 });
 ```
 
-### Success
+#### Success
 
 Renders a checkmark icon in front of the message.
 
@@ -66,7 +104,7 @@ Renders a checkmark icon in front of the message.
 toast.success('Event has been created');
 ```
 
-### Info
+#### Info
 
 Renders a question mark icon in front of the message.
 
@@ -74,7 +112,7 @@ Renders a question mark icon in front of the message.
 toast.info('Event has new information');
 ```
 
-### Warning
+#### Warning
 
 Renders a warning icon in front of the message.
 
@@ -82,7 +120,7 @@ Renders a warning icon in front of the message.
 toast.warning('Event has warning');
 ```
 
-### Error
+#### Error
 
 Renders an error icon in front of the message.
 
@@ -90,28 +128,42 @@ Renders an error icon in front of the message.
 toast.error('Event has not been created');
 ```
 
-### Action
+#### Action
 
-Renders a button.
+Renders a primary button, clicking it will close the toast and run the callback passed via `onClick`.
+You can prevent the toast from closing by calling `event.preventDefault()` in the onClick callback.
 
 ```ts
-toast('Event has been created', {
-	action: {
-		label: 'Undo',
-		onClick: () => console.log('Undo')
-	}
+toast('My action toast', {
+  action: {
+    label: 'Action',
+    onClick: () => console.log('Action!')
+  }
 });
 ```
 
-### Promise
+#### Cancel
+
+Renders a secondary button, clicking it will close the toast and run the callback passed via `onClick`.
+
+```ts
+toast('My cancel toast', {
+  cancel: {
+    label: 'Cancel',
+    onClick: () => console.log('Cancel!'),
+  },
+});
+```
+
+#### Promise
 
 Starts in a loading state and will update automatically after the promise resolves or fails.
 
 ```ts
 toast.promise(() => new Promise((resolve) => setTimeout(resolve, 2000)), {
-	loading: 'Loading',
-	success: 'Success',
-	error: 'Error'
+  loading: 'Loading',
+  success: 'Success',
+  error: 'Error'
 });
 ```
 
@@ -119,39 +171,33 @@ You can pass a function to the success/error messages to incorporate the result/
 
 ```ts
 toast.promise(promise, {
-	loading: 'Loading...',
-	success: (data) => {
-		return `${data.name} has been added!`;
-	},
-	error: 'Error'
+  loading: 'Loading...',
+  success: (data) => {
+    return `${data.name} has been added!`;
+  },
+  error: 'Error'
 });
 ```
 
-### Custom Component
+#### Loading
 
-You can pass a component as the first argument instead of a string to render custom component while maintaining default styling. You can use the headless version below for a custom, unstyled toast.
+Renders a toast with a loading spinner. Useful when you want to handle various states yourself instead of using a promise toast.
+
+```ts
+toast.loading('Loading data');
+```
+
+#### Custom Component
+
+You can pass a component as the first argument instead of a string to render custom component while maintaining default styling.
 
 ```ts
 toast(CustomComponent);
 ```
 
-### Updating a toast
+#### Headless
 
-You can update a toast by using the `toast` function and passing it the id of the toast you want to update, the rest stays the same.
-
-```ts
-const toastId = toast('Sonner');
-
-toast.success('Toast has been updated', {
-	id: toastId
-});
-```
-
-## Customization
-
-### Headless
-
-You can use `toast.custom()` to render an unstyled toast with custom component while maintaining the functionality.
+You can use `toast.custom()` to render an unstyled toast with a custom component while maintaining the functionality.
 
 ```ts
 @Component({
@@ -176,6 +222,63 @@ import { CustomComponent } from './custom.component';
 toast.custom(CustomComponent);
 ```
 
+#### Dynamic position
+
+You can change the position of the toast dynamically by passing a position prop to the toast function. It will not affect the positioning of other toasts.
+
+```ts
+// Available positions:
+// top-left, top-center, top-right, bottom-left, bottom-center, bottom-right
+toast('Hello World', {
+  position: 'top-center',
+});
+```
+
+### Other
+
+#### Updating a toast
+
+You can update a toast by using the `toast` function and passing it the id of the toast you want to update, the rest stays the same.
+
+```ts
+const toastId = toast('Sonner');
+
+toast.success('Toast has been updated', {
+  id: toastId
+});
+```
+
+#### On Close Callback
+
+You can pass `onDismiss` and `onAutoClose` callbacks to each toast. `onDismiss` gets fired when either the close button gets clicked or the toast is swiped. `onAutoClose` fires when the toast disappears automatically after it's timeout (duration prop).
+
+```ts
+toast('Event has been created', {
+  onDismiss: (t) => console.log(`Toast with id ${t.id} has been dismissed`),
+  onAutoClose: (t) => console.log(`Toast with id ${t.id} has been closed automatically`),
+});
+```
+
+#### Dismissing toasts programmatically
+
+To remove a toast programmatically use `toast.dismiss(id)`. The `toast()` function return the id of the toast.
+
+```ts
+const toastId = toast('Event has been created');
+
+toast.dismiss(toastId);
+```
+
+You can also dismiss all toasts at once by calling `toast.dismiss()` without an id.
+
+```ts
+toast.dismiss();
+```
+
+## Toaster
+
+This component renders all the toasts, you can place it anywhere in your app.
+
 ### Theme
 
 You can change the theme using the `theme` prop. Default theme is light.
@@ -195,88 +298,12 @@ You can change the position through the `position` prop on the `<ngx-sonner-toas
 <ngx-sonner-toaster position="top-center" />
 ```
 
-### Expanded
+### Expand
 
 Toasts can also be expanded by default through the `expand` prop. You can also change the amount of visible toasts which is 3 by default.
 
 ```html
 <ngx-sonner-toaster expand visibleToasts="9" />
-```
-
-### Styling
-
-Styling can be done globally via `toastOptions`, this way every toast will have the same styling.
-
-```html
-<ngx-sonner-toaster
-	[toastOptions]="{
-		style: 'background: red;',
-		class: 'my-toast',
-		descriptionClass: 'my-toast-description'
-	}"
-/>
-```
-
-You can also use the same props when calling `toast` to style a specific toast.
-
-```ts
-toast('Event has been created', {
-	style: 'background: red;',
-	class: 'my-toast',
-	descriptionClass: 'my-toast-description'
-});
-```
-
-### Tailwind CSS
-
-The preferred way to style the toasts with tailwind is by using the `unstyled` prop. That will give you an unstyled toast which you can then style with tailwind.
-
-```html
-<ngx-sonner-toaster
-	[toastOptions]="{
-		unstyled: true,
-		classes: {
-			toast: 'bg-blue-400',
-			title: 'text-red-400',
-			description: 'text-red-400',
-			actionButton: 'bg-zinc-400',
-			cancelButton: 'bg-orange-400',
-			closeButton: 'bg-lime-400',
-		}
-	}"
-/>
-```
-
-You can do the same when calling `toast()`.
-
-```ts
-toast('Hello World', {
-  unstyled: true,
-  classes: {
-		toast: 'bg-blue-400',
-		title: 'text-red-400 text-2xl',
-		description: 'text-red-400',
-		actionButton: 'bg-zinc-400',
-		cancelButton: 'bg-orange-400',
-		closeButton: 'bg-lime-400',
-  },
-})
-```
-
-Styling per toast type is also possible.
-
-```html
-<ngx-sonner-toaster
-	[toastOptions]="{
-		unstyled: true,
-		classes: {
-			error: 'bg-red-400',
-			success: 'text-green-400',
-			warning: 'text-yellow-400',
-			info: 'bg-blue-400',
-		}
-	}"
-/>
 ```
 
 ### Close button
@@ -303,22 +330,6 @@ Offset from the edges of the screen.
 <ngx-sonner-toaster offset="80px" />
 ```
 
-### Programmatically remove toast
-
-To remove a toast programmatically use `toast.dismiss(id)`.
-
-```ts
-const toastId = toast('Event has been created');
-
-toast.dismiss(toastId);
-```
-
-You can also dismiss all toasts at once by calling `toast.dismiss()` without an id.
-
-```ts
-toast.dismiss();
-```
-
 ### Duration
 
 You can change the duration of each toast by using the `duration` property, or change the duration of all toasts like this:
@@ -338,18 +349,7 @@ toast('Event has been created', {
 });
 ```
 
-### On Close Callback
-
-You can pass `onDismiss` and `onAutoClose` callbacks. `onDismiss` gets fired when either the close button gets clicked or the toast is swiped. `onAutoClose` fires when the toast disappears automatically after it's timeout (`duration` prop).
-
-```ts
-toast('Event has been created', {
-	onDismiss: (t) => console.log(`Toast with id ${t.id} has been dismissed`),
-	onAutoClose: (t) => console.log(`Toast with id ${t.id} has been closed automatically`)
-});
-```
-
-## Keyboard focus
+### Keyboard focus
 
 You can focus on the toast area by pressing ⌥/alt + T. You can override it by providing an array of `event.code` values for each key.
 
@@ -357,6 +357,81 @@ You can focus on the toast area by pressing ⌥/alt + T. You can override it by 
 <ngx-sonner-toaster [hotKey]="['KeyC']" />
 ```
 
+## Styling
+
+Styling can be done globally via `toastOptions`, this way every toast will have the same styling.
+
+```html
+<ngx-sonner-toaster
+  [toastOptions]="{
+		style: { background: 'red' },
+    className: 'my-toast',
+	}"
+/>
+```
+
+You can also use the same props when calling `toast` to style a specific toast.
+
+```ts
+toast('Event has been created', {
+  style: 'background: red;',
+  class: 'my-toast',
+  descriptionClass: 'my-toast-description'
+});
+```
+
+### Tailwind CSS
+
+The preferred way to style the toasts with tailwind is by using the `unstyled` prop. That will give you an unstyled toast which you can then style with tailwind.
+
+```html
+<ngx-sonner-toaster
+  [toastOptions]="{
+		unstyled: true,
+		classes: {
+			toast: 'bg-blue-400',
+			title: 'text-red-400',
+			description: 'text-red-400',
+			actionButton: 'bg-zinc-400',
+			cancelButton: 'bg-orange-400',
+			closeButton: 'bg-lime-400',
+		}
+	}"
+/>
+```
+
+You can do the same when calling `toast()`.
+
+```ts
+toast('Hello World', {
+  unstyled: true,
+  classes: {
+    toast: 'bg-blue-400',
+    title: 'text-red-400 text-2xl',
+    description: 'text-red-400',
+    actionButton: 'bg-zinc-400',
+    cancelButton: 'bg-orange-400',
+    closeButton: 'bg-lime-400',
+  },
+})
+```
+
+Styling per toast type is also possible.
+
+```html
+<ngx-sonner-toaster
+  [toastOptions]="{
+		unstyled: true,
+		classes: {
+			error: 'bg-red-400',
+			success: 'text-green-400',
+			warning: 'text-yellow-400',
+			info: 'bg-blue-400',
+		}
+	}"
+/>
+```
+
 ## License
 
-MIT
+[MIT](https://github.com/tutkli/ngx-sonner/blob/master/LICENSE)
