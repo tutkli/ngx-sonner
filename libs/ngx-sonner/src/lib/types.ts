@@ -51,7 +51,7 @@ export type ToastT = {
   };
   onDismiss?: (toast: ToastT) => void;
   onAutoClose?: (toast: ToastT) => void;
-  dismissable?: boolean;
+  dismissible?: boolean;
   promise?: PromiseT;
   style?: Record<string, unknown>;
   class?: string;

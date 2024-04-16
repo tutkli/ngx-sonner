@@ -31,7 +31,7 @@ function createToastState() {
         ? data.id
         : toastsCounter++;
 
-    const dismissable = data.dismissable ?? true;
+    const dismissable = data.dismissible ?? true;
     const type = data.type ?? 'default';
 
     const alreadyExists = toasts().find(toast => toast.id === id);
@@ -45,7 +45,7 @@ function createToastState() {
               ...data,
               id,
               title: message,
-              dismissable,
+              dismissible: dismissable,
               type,
               updated: true,
             };
@@ -53,7 +53,7 @@ function createToastState() {
         })
       );
     } else {
-      addToast({ ...rest, id, title: message, dismissable, type });
+      addToast({ ...rest, id, title: message, dismissible: dismissable, type });
     }
 
     return id;
