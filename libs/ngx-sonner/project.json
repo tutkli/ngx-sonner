@@ -10,8 +10,7 @@
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "libs/ngx-sonner/ng-package.json",
-        "polyfills": []
+        "project": "libs/ngx-sonner/ng-package.json"
       },
       "configurations": {
         "production": {
