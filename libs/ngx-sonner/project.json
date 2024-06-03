@@ -11,6 +11,7 @@
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
         "project": "libs/ngx-sonner/ng-package.json",
+        "polyfills": []
       },
       "configurations": {
         "production": {

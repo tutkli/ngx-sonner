@@ -13,7 +13,7 @@
         "outputPath": "dist/apps/docs",
         "index": "apps/docs/src/index.html",
         "browser": "apps/docs/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [],
         "tsConfig": "apps/docs/tsconfig.app.json",
         "assets": ["apps/docs/src/favicon.ico", "apps/docs/src/assets"],
         "styles": ["apps/docs/src/styles.css", "node_modules/highlight.js/styles/github.min.css"],

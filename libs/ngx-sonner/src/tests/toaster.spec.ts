@@ -1,3 +1,4 @@
+import { provideExperimentalZonelessChangeDetection } from '@angular/core';
 import { render } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { toastState } from 'ngx-sonner';
@@ -11,8 +12,8 @@ import { sleep } from './utils';
 async function setup(inputs: ToastTestInputs) {
   const user = userEvent.setup();
   const returned = await render(ToasterTestComponent, {
+    providers: [provideExperimentalZonelessChangeDetection()],
     componentInputs: inputs,
-    autoDetectChanges: true,
   });
   const trigger = returned.getByTestId('trigger');
 
@@ -43,7 +44,7 @@ describe('Toaster', () => {
   });
 
   it('should show a toast with custom duration', async () => {
-    const { user, trigger, queryByText, detectChanges } = await setup({
+    const { user, trigger, queryByText } = await setup({
       callback: toast => toast('Custom duration', { duration: 300 }),
     });
 
@@ -52,87 +53,77 @@ describe('Toaster', () => {
     await user.click(trigger);
     expect(queryByText('Custom duration')).not.toBeNull();
 
-    await sleep(500);
-    detectChanges();
+    await sleep(600);
     expect(queryByText('Custom duration')).toBeNull();
   });
 
   it('should reset duration on a toast update', async () => {
-    const { user, trigger, getByText, queryByText, detectChanges } =
-      await setup({
-        callback: toast => {
-          const id = toast('Loading', { duration: 2000 });
+    const { user, trigger, getByText, queryByText } = await setup({
+      callback: toast => {
+        const id = toast('Loading', { duration: 2000 });
 
-          setTimeout(() => {
-            toast.success('Finished loading!', { id });
-          }, 1500);
-        },
-      });
+        setTimeout(() => {
+          toast.success('Finished loading!', { id });
+        }, 1500);
+      },
+    });
 
     await user.click(trigger);
     expect(getByText('Loading')).toBeVisible();
     await sleep(1500);
-    detectChanges();
     expect(queryByText('Loading')).toBeNull();
     expect(getByText('Finished loading!')).toBeVisible();
     // there would only be ~.5 seconds left on the original toast
     // so we're going to wait .5 seconds to make sure the timer is reset
     await sleep(500);
-    detectChanges();
     expect(getByText('Finished loading!')).toBeVisible();
     // finally we'll wait another 1500ms to make sure the toast closes after 2 seconds
     // since the original toast had a duration of 2 seconds
     await sleep(2000);
-    detectChanges();
     expect(queryByText('Finished loading!')).toBeNull();
   });
 
   it('should allow duration updates on toast update', async () => {
-    const { user, trigger, getByText, queryByText, detectChanges } =
-      await setup({
-        callback: toast => {
-          const id = toast('Loading', { duration: 2000 });
+    const { user, trigger, getByText, queryByText } = await setup({
+      callback: toast => {
+        const id = toast('Loading', { duration: 2000 });
 
-          setTimeout(() => {
-            toast.success('Finished loading!', { id, duration: 4000 });
-          }, 1000);
-        },
-      });
+        setTimeout(() => {
+          toast.success('Finished loading!', { id, duration: 4000 });
+        }, 1000);
+      },
+    });
 
     await user.click(trigger);
     expect(getByText('Loading')).toBeVisible();
     await sleep(1200);
-    detectChanges();
     expect(queryByText('Loading')).toBeNull();
     expect(getByText('Finished loading!')).toBeVisible();
     await sleep(2200);
-    detectChanges();
     expect(getByText('Finished loading!')).toBeVisible();
   });
 
   it('should show correct toast content based on promise state', async () => {
-    const { user, trigger, queryByText, getByText, detectChanges } =
-      await setup({
-        callback: toast =>
-          toast.promise<string>(
-            () =>
-              new Promise(resolve =>
-                setTimeout(() => {
-                  resolve('Loaded');
-                }, 2000)
-              ),
-            {
-              loading: 'Loading...',
-              success: data => data,
-              error: 'Error',
-            }
-          ),
-      });
+    const { user, trigger, queryByText, getByText } = await setup({
+      callback: toast =>
+        toast.promise<string>(
+          () =>
+            new Promise(resolve =>
+              setTimeout(() => {
+                resolve('Loaded');
+              }, 2000)
+            ),
+          {
+            loading: 'Loading...',
+            success: data => data,
+            error: 'Error',
+          }
+        ),
+    });
 
     await user.click(trigger);
     expect(getByText('Loading...')).toBeVisible();
     await sleep(2000);
-    detectChanges();
     expect(queryByText('Loading...')).toBeNull();
     expect(getByText('Loaded')).toBeVisible();
   });
@@ -151,25 +142,22 @@ describe('Toaster', () => {
   });
 
   it('should not immediately close the toast when reset', async () => {
-    const { user, trigger, getByText, queryByText, detectChanges } =
-      await setup({
-        callback: toast => {
-          const id = toast('Loading', { duration: 4000 });
+    const { user, trigger, getByText, queryByText } = await setup({
+      callback: toast => {
+        const id = toast('Loading', { duration: 4000 });
 
-          setTimeout(() => {
-            toast.success('Finished loading!', { id });
-          }, 1000);
-        },
-      });
+        setTimeout(() => {
+          toast.success('Finished loading!', { id });
+        }, 1000);
+      },
+    });
 
     await user.click(trigger);
     expect(getByText('Loading')).toBeVisible();
     await sleep(2050);
-    detectChanges();
     expect(queryByText('Loading')).toBeNull();
     expect(getByText('Finished loading!')).toBeVisible();
     await sleep(1000);
-    detectChanges();
     expect(getByText('Finished loading!')).toBeVisible();
   });
 
