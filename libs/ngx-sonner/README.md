@@ -6,7 +6,10 @@ Based on [emilkowalski](https://github.com/emilkowalski)'s React [implementation
 
 ## Angular compatibility
 
-Make sure you are using Angular v17.3.0 or greater
+| ngx-sonner | @angular |
+|------------|----------|
+| 2.0.0      | ≥18.0.0  |
+| 1.0.0      | ≥17.3.0  |
 
 ## Quick start
 
@@ -65,6 +68,7 @@ export class AppComponent {
   - [Theme](#theme)
   - [Position](#position)
   - [Expand](#expand)
+  - [Custom Icons](#custom-icons)
   - [Close button](#close-button)
   - [Rich colors](#rich-colors)
   - [Custom offset](#custom-offset)
@@ -304,6 +308,20 @@ Toasts can also be expanded by default through the `expand` prop. You can also c
 
 ```html
 <ngx-sonner-toaster expand visibleToasts="9" />
+```
+
+### Custom icons
+
+You can change the default icons by providing your icons inside the toaster component.
+
+```html
+<ngx-sonner-toaster>
+  <custom-loading-icon loading-icon/>
+  <custom-success-icon success-icon />
+  <custom-error-icon error-icon />
+  <custom-info-icon info-icon />
+  <custom-warning-icon warning-icon />
+</ngx-sonner-toaster>
 ```
 
 ### Close button

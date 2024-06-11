@@ -79,13 +79,21 @@ import { Position, Theme, ToasterProps } from './types';
                 [classes]="toastOptions().classes ?? {}"
                 [duration]="toastOptions().duration ?? duration()"
                 [unstyled]="toastOptions().unstyled ?? false">
-                <ngx-sonner-loader
-                  [isVisible]="toast.type === 'loading'"
-                  loading-icon />
-                <ngx-sonner-icon type="success" success-icon />
-                <ngx-sonner-icon type="error" error-icon />
-                <ngx-sonner-icon type="warning" warning-icon />
-                <ngx-sonner-icon type="info" info-icon />
+                <ng-content select="[loading-icon]" loading-icon>
+                  <ngx-sonner-loader [isVisible]="toast.type === 'loading'" />
+                </ng-content>
+                <ng-content select="[success-icon]" success-icon>
+                  <ngx-sonner-icon type="success" />
+                </ng-content>
+                <ng-content select="[error-icon]" error-icon>
+                  <ngx-sonner-icon type="error" />
+                </ng-content>
+                <ng-content select="[warning-icon]" warning-icon>
+                  <ngx-sonner-icon type="warning" />
+                </ng-content>
+                <ng-content select="[info-icon]" info-icon>
+                  <ngx-sonner-icon type="info" />
+                </ng-content>
               </ngx-sonner-toast>
             }
           </ol>
