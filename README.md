@@ -6,7 +6,10 @@ Based on [emilkowalski](https://github.com/emilkowalski)'s React [implementation
 
 ## Angular compatibility
 
-Make sure you are using Angular v17.3.0 or greater
+| ngx-sonner | @angular |
+|----------|---------|
+| 1.0.0    | ≥17.3.0 |
+| 2.0.0    | ≥18.0.0 |
 
 ## Quick start
 
