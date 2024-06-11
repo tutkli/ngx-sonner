@@ -1,3 +1,18 @@
+## [1.0.1](https://github.com/tutkli/ngx-sonner/compare/v1.0.0...v1.0.1) (2024-06-11)
+
+
+### Bug Fixes
+
+* allow to render custom icons for toasts ([59c1aca](https://github.com/tutkli/ngx-sonner/commit/59c1aca734f399a4a4e0ad60fcccda7666a7b068)), closes [#10](https://github.com/tutkli/ngx-sonner/issues/10)
+
+
+### Chores
+
+* provide zoneless change detection support ([ca8066b](https://github.com/tutkli/ngx-sonner/commit/ca8066bfb7ec4e5480ac4c4e77d2a49621758ed2))
+* remove polyfills from lib schema ([820e23b](https://github.com/tutkli/ngx-sonner/commit/820e23b6642ef8f622eb2abfa912f81f1c655639))
+* update node version ([15f87a5](https://github.com/tutkli/ngx-sonner/commit/15f87a55977c0c0f46ed7be58081efe8a13b25e2))
+* update nx ([c9774d1](https://github.com/tutkli/ngx-sonner/commit/c9774d1c8fe4b45a8469ab06c533e291f8328ec4))
+
 ## [1.0.0](https://github.com/tutkli/ngx-sonner/compare/v0.4.2...v1.0.0) (2024-04-16)
 
 
