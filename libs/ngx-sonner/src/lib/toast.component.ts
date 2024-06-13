@@ -91,9 +91,7 @@ import { ToastProps } from './types';
       } @else {
         @if (toastType() !== 'default' || toast().icon || toast().promise) {
           <div data-icon>
-            @if (
-              toast().promise || (toastType() === 'loading' && !toast().icon)
-            ) {
+            @if (toastType() === 'loading' && !toast().icon) {
               <ng-content select="[loading-icon]" />
             }
             @if (toast().icon) {
