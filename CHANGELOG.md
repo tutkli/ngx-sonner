@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/tutkli/ngx-sonner/compare/v2.0.0...v2.0.1) (2024-06-13)
+
+
+### Bug Fixes
+
+* show correct icons when promise toast updates ([#22](https://github.com/tutkli/ngx-sonner/issues/22)) ([ac0d1b8](https://github.com/tutkli/ngx-sonner/commit/ac0d1b8dcf00dcc714b88b8b33861062fd527779))
+
 ## [2.0.0](https://github.com/tutkli/ngx-sonner/compare/v1.0.1...v2.0.0) (2024-06-11)
 
 
