@@ -228,6 +228,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
   isVisible = computed(() => this.index() + 1 <= this.visibleToasts());
   toastType = computed(() => this.toast().type ?? 'default');
   toastClass = computed(() => this.toast().class ?? '');
+  toastPosition = computed(() => this.toast().position ?? this.position());
   toastDescriptionClass = computed(() => this.toast().descriptionClass ?? '');
 
   heightIndex = computed(() =>
@@ -240,7 +241,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
   lastCloseTimerStartTimeRef = 0;
   pointerStartRef: { x: number; y: number } | null = null;
 
-  coords = computed(() => this.position().split('-'));
+  coords = computed(() => this.toastPosition().split('-'));
   toastsHeightBefore = computed(() =>
     this.heights().reduce((prev, curr, reducerIndex) => {
       if (reducerIndex >= this.heightIndex()) return prev;
