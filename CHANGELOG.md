@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/tutkli/ngx-sonner/compare/v2.0.1...v2.0.2) (2024-08-23)
+
+
+### Bug Fixes
+
+* prioritize toast position over toaster's ([874f47d](https://github.com/tutkli/ngx-sonner/commit/874f47d6e6eeb6bdefa7fd170ead6a2f8c45436a))
+
 ## [2.0.1](https://github.com/tutkli/ngx-sonner/compare/v2.0.0...v2.0.1) (2024-06-13)
 
 
