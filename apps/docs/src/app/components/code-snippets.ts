@@ -2,7 +2,6 @@ export const usageSnippet = `import { toast, NgxSonnerToaster } from 'ngx-sonner
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [NgxSonnerToaster],
   template: \`
     <ngx-sonner-toaster />

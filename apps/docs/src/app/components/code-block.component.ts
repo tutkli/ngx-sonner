@@ -19,7 +19,6 @@ hljs.registerLanguage('xml', xml);
 
 @Component({
   selector: 'docs-code-block',
-  standalone: true,
   template: `
     <div class="outerWrapper">
       <button class="copyButton" (click)="onCopy()" aria-label="Copy code">

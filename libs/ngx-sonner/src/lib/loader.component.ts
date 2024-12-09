@@ -7,7 +7,6 @@ import {
 
 @Component({
   selector: 'ngx-sonner-loader',
-  standalone: true,
   template: `
     <div class="sonner-loading-wrapper" [attr.data-visible]="isVisible()">
       <div class="sonner-spinner">

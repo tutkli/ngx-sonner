@@ -7,7 +7,6 @@ import {
 
 @Component({
   selector: 'docs-test',
-  standalone: true,
   template: `
     <div class="headless">
       <p class="headlessTitle">Event Created</p>

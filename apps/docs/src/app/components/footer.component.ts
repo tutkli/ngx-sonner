@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'docs-footer',
-  standalone: true,
   template: `
     <footer class="wrapper">
       <div class="container">

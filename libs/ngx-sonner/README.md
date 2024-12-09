@@ -33,7 +33,6 @@ import { toast, NgxSonnerToaster } from 'ngx-sonner';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [NgxSonnerToaster],
   template: `
     <ngx-sonner-toaster />
@@ -207,7 +206,6 @@ You can use `toast.custom()` to render an unstyled toast with a custom component
 ```ts
 @Component({
   selector: 'app-custom',
-  standalone: true,
   template: `
     <div>
       This is a custom component <button (click)="toastClick()">close</button>

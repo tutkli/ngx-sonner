@@ -8,7 +8,6 @@ import {
 
 @Component({
   selector: 'docs-installation',
-  standalone: true,
   template: `
     <div>
       <h2>Installation</h2>

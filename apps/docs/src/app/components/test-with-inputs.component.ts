@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
   selector: 'docs-test-with-inputs',
-  standalone: true,
   template: `
     <div [innerHTML]="message()"></div>
   `,
