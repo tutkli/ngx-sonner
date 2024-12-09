@@ -26,10 +26,9 @@ import { toastState } from './state';
 import { ToastProps } from './types';
 
 @Component({
-  selector: 'ngx-sonner-toast',
-  standalone: true,
-  imports: [NgComponentOutlet, IsStringPipe, AsComponentPipe],
-  template: `
+    selector: 'ngx-sonner-toast',
+    imports: [NgComponentOutlet, IsStringPipe, AsComponentPipe],
+    template: `
     <li
       #toastRef
       data-sonner-toast
@@ -179,7 +178,7 @@ import { ToastProps } from './types';
       }
     </li>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToastComponent implements AfterViewInit, OnDestroy {
   protected readonly cn = cn;

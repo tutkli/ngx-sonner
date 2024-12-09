@@ -31,10 +31,9 @@ import { ToastComponent } from './toast.component';
 import { Position, Theme, ToasterProps } from './types';
 
 @Component({
-  selector: 'ngx-sonner-toaster',
-  standalone: true,
-  imports: [ToastComponent, ToastFilterPipe, IconComponent, LoaderComponent],
-  template: `
+    selector: 'ngx-sonner-toaster',
+    imports: [ToastComponent, ToastFilterPipe, IconComponent, LoaderComponent],
+    template: `
     @if (toasts().length > 0) {
       <section
         [attr.aria-label]="'Notifications ' + hotKeyLabel()"
@@ -101,9 +100,9 @@ import { Position, Theme, ToasterProps } from './types';
       </section>
     }
   `,
-  styleUrl: 'toaster.component.css',
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrl: 'toaster.component.css',
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export class NgxSonnerToaster implements OnDestroy {

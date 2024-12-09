@@ -8,10 +8,9 @@ import { toast } from 'ngx-sonner';
 import { CodeBlockComponent } from './code-block.component';
 
 @Component({
-  selector: 'docs-expand',
-  standalone: true,
-  imports: [CodeBlockComponent],
-  template: `
+    selector: 'docs-expand',
+    imports: [CodeBlockComponent],
+    template: `
     <div>
       <h2>Expand</h2>
       <p>
@@ -36,7 +35,7 @@ import { CodeBlockComponent } from './code-block.component';
       <docs-code-block [code]="expandSnippet()" />
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExpandComponent {
   expand = model.required<boolean>();

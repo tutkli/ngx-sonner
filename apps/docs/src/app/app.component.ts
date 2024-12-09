@@ -10,20 +10,19 @@ import { TypeComponent } from './components/types.component';
 import { UsageComponent } from './components/usage.component';
 
 @Component({
-  selector: 'docs-root',
-  standalone: true,
-  imports: [
-    NgxSonnerToaster,
-    HeroComponent,
-    InstallationComponent,
-    UsageComponent,
-    TypeComponent,
-    PositionComponent,
-    ExpandComponent,
-    OtherComponent,
-    FooterComponent,
-  ],
-  template: `
+    selector: 'docs-root',
+    imports: [
+        NgxSonnerToaster,
+        HeroComponent,
+        InstallationComponent,
+        UsageComponent,
+        TypeComponent,
+        PositionComponent,
+        ExpandComponent,
+        OtherComponent,
+        FooterComponent,
+    ],
+    template: `
     <ngx-sonner-toaster
       [expand]="expand()"
       [position]="position()"
@@ -43,7 +42,7 @@ import { UsageComponent } from './components/usage.component';
     </main>
     <docs-footer />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
   expand = signal(false);

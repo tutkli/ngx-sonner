@@ -8,6 +8,7 @@ Based on [emilkowalski](https://github.com/emilkowalski)'s React [implementation
 
 | ngx-sonner | @angular |
 |------------|----------|
+| 3.0.0      | ≥19.0.0  |
 | 2.0.0      | ≥18.0.0  |
 | 1.0.0      | ≥17.3.0  |
 

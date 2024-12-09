@@ -11,10 +11,9 @@ export type ToastTestInputs = {
 };
 
 @Component({
-  selector: 'ngx-sonner-test',
-  standalone: true,
-  imports: [NgxSonnerToaster],
-  template: `
+    selector: 'ngx-sonner-test',
+    imports: [NgxSonnerToaster],
+    template: `
     <ngx-sonner-toaster
       [dir]="dir()"
       [theme]="theme()"
@@ -38,7 +37,7 @@ export type ToastTestInputs = {
     </ngx-sonner-toaster>
     <button data-testid="trigger" (click)="onClick()">Trigger</button>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToasterTestComponent {
   callback = input.required<ToastTestInputs['callback']>();

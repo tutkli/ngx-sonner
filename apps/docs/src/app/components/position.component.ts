@@ -19,10 +19,9 @@ const positions = [
 type Position = (typeof positions)[number];
 
 @Component({
-  selector: 'docs-position',
-  standalone: true,
-  imports: [CodeBlockComponent],
-  template: `
+    selector: 'docs-position',
+    imports: [CodeBlockComponent],
+    template: `
     <div>
       <h2>Position</h2>
       <p>Swipe direction changes depending on the position.</p>
@@ -39,7 +38,7 @@ type Position = (typeof positions)[number];
       <docs-code-block [code]="positionSnippet()" />
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PositionComponent {
   protected positions = positions;
