@@ -1,5 +1,6 @@
 import { NgComponentOutlet } from '@angular/common';
 import {
+  afterRenderEffect,
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
@@ -26,9 +27,9 @@ import { toastState } from './state';
 import { ToastProps } from './types';
 
 @Component({
-    selector: 'ngx-sonner-toast',
-    imports: [NgComponentOutlet, IsStringPipe, AsComponentPipe],
-    template: `
+  selector: 'ngx-sonner-toast',
+  imports: [NgComponentOutlet, IsStringPipe, AsComponentPipe],
+  template: `
     <li
       #toastRef
       data-sonner-toast
@@ -178,7 +179,7 @@ import { ToastProps } from './types';
       }
     </li>
   `,
-    changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToastComponent implements AfterViewInit, OnDestroy {
   protected readonly cn = cn;
@@ -302,7 +303,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
       }
     });
 
-    effect(onCleanup => {
+    afterRenderEffect(onCleanup => {
       if (!this.isPromiseLoadingOrInfiniteDuration()) {
         if (this.expanded() || this.interacting()) {
           this.pauseTimer();
