@@ -8,9 +8,9 @@ import {
   effect,
   ElementRef,
   input,
+  linkedSignal,
   OnDestroy,
   signal,
-  untracked,
   viewChild,
 } from '@angular/core';
 import { cn } from './internal/cn';
@@ -235,7 +235,14 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
     this.heights().findIndex(height => height.toastId === this.toast().id)
   );
 
-  offset = signal(0);
+  offset = linkedSignal({
+    source: () => ({
+      heightIndex: this.heightIndex(),
+      toastsHeightBefore: this.toastsHeightBefore(),
+    }),
+    computation: ({ heightIndex, toastsHeightBefore }) =>
+      Math.round(heightIndex * GAP + toastsHeightBefore),
+  });
 
   closeTimerStartTimeRef = 0;
   lastCloseTimerStartTimeRef = 0;
@@ -283,14 +290,6 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
   }));
 
   constructor() {
-    effect(() => {
-      const heightIndex = this.heightIndex();
-      const toastsHeightBefore = this.toastsHeightBefore();
-      untracked(() =>
-        this.offset.set(Math.round(heightIndex * GAP + toastsHeightBefore))
-      );
-    });
-
     effect(() => {
       if (this.toast().updated) {
         // if the toast has been updated after the initial render,
