@@ -1,3 +1,29 @@
+## [3.0.0](https://github.com/tutkli/ngx-sonner/compare/v2.0.2...v3.0.0) (2024-12-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* minimal angular version is now v19
+
+### Features
+
+* update to angular v19 ([bf70b01](https://github.com/tutkli/ngx-sonner/commit/bf70b011a803bf7ac80817436e0c41b4d9967cc7))
+
+
+### Bug Fixes
+
+* toast remaining time is handled after render ([b19de68](https://github.com/tutkli/ngx-sonner/commit/b19de68a566eaf73ad3adce2a33873c52b3f36a9))
+
+
+### Chores
+
+* update package-lock.json ([7af1c9a](https://github.com/tutkli/ngx-sonner/commit/7af1c9a22818a3c2e932e350c3f8f5717e33c6bb))
+
+
+### Refactoring
+
+* replace effects with linkedSignals ([#32](https://github.com/tutkli/ngx-sonner/issues/32)) ([51b0a17](https://github.com/tutkli/ngx-sonner/commit/51b0a174faf004abac78dac309878b9f7170cd01))
+
 ## [2.0.2](https://github.com/tutkli/ngx-sonner/compare/v2.0.1...v2.0.2) (2024-08-23)
 
 
