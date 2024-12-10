@@ -4,15 +4,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
   ElementRef,
   inject,
   input,
+  linkedSignal,
   numberAttribute,
   OnDestroy,
   PLATFORM_ID,
   signal,
-  untracked,
   viewChild,
   ViewEncapsulation,
 } from '@angular/core';
@@ -31,9 +30,9 @@ import { ToastComponent } from './toast.component';
 import { Position, Theme, ToasterProps } from './types';
 
 @Component({
-    selector: 'ngx-sonner-toaster',
-    imports: [ToastComponent, ToastFilterPipe, IconComponent, LoaderComponent],
-    template: `
+  selector: 'ngx-sonner-toaster',
+  imports: [ToastComponent, ToastFilterPipe, IconComponent, LoaderComponent],
+  template: `
     @if (toasts().length > 0) {
       <section
         [attr.aria-label]="'Notifications ' + hotKeyLabel()"
@@ -100,9 +99,9 @@ import { Position, Theme, ToasterProps } from './types';
       </section>
     }
   `,
-    styleUrl: 'toaster.component.css',
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: 'toaster.component.css',
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export class NgxSonnerToaster implements OnDestroy {
@@ -154,9 +153,15 @@ export class NgxSonnerToaster implements OnDestroy {
       ) as Position[]
   );
 
-  expanded = signal(false);
+  expanded = linkedSignal({
+    source: this.toasts,
+    computation: toasts => toasts.length < 1,
+  });
+  actualTheme = linkedSignal({
+    source: this.theme,
+    computation: newTheme => this.getActualTheme(newTheme),
+  });
   interacting = signal(false);
-  actualTheme = signal(this.getActualTheme(this.theme()));
 
   listRef = viewChild<ElementRef<HTMLOListElement>>('listRef');
   lastFocusedElementRef = signal<HTMLElement | null>(null);
@@ -186,17 +191,6 @@ export class NgxSonnerToaster implements OnDestroy {
         .matchMedia('(prefers-color-scheme: dark)')
         .addEventListener('change', this.handleThemePreferenceChange);
     }
-
-    effect(() => {
-      if (this.toasts().length >= 1) {
-        untracked(() => this.expanded.set(false));
-      }
-    });
-
-    effect(() => {
-      const theme = this.theme();
-      untracked(() => this.actualTheme.set(this.getActualTheme(theme)));
-    });
   }
 
   ngOnDestroy() {
@@ -279,32 +273,29 @@ export class NgxSonnerToaster implements OnDestroy {
     }
   };
 
-  private getActualTheme(t: Theme) {
-    if (t !== 'system') {
-      return t;
+  private getActualTheme(theme: Theme): Theme {
+    if (theme !== 'system') {
+      return theme;
     }
 
     if (isPlatformBrowser(this.platformId)) {
-      if (
-        window.matchMedia &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches
-      ) {
-        return 'dark';
-      }
-
-      return 'light';
+      const prefersDark = window.matchMedia?.(
+        '(prefers-color-scheme: dark)'
+      ).matches;
+      return prefersDark ? 'dark' : 'light';
     }
 
     return 'light';
   }
 
   getDocumentDirection(): ToasterProps['dir'] {
-    if (typeof window === 'undefined') return 'ltr';
-    if (typeof document === 'undefined') return 'ltr'; // For Fresh purpose
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      return 'ltr';
+    }
 
     const dirAttribute = document.documentElement.getAttribute('dir');
 
-    if (dirAttribute === 'auto' || !dirAttribute) {
+    if (!dirAttribute || dirAttribute === 'auto') {
       return window.getComputedStyle(document.documentElement)
         .direction as ToasterProps['dir'];
     }
