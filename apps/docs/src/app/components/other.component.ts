@@ -11,10 +11,9 @@ import { TestWithInputsComponent } from './test-with-inputs.component';
 import { TestComponent } from './test.component';
 
 @Component({
-  selector: 'docs-other',
-  standalone: true,
-  imports: [CodeBlockComponent],
-  template: `
+    selector: 'docs-other',
+    imports: [CodeBlockComponent],
+    template: `
     <div>
       <h2>Other</h2>
       <div class="buttons">
@@ -34,7 +33,7 @@ import { TestComponent } from './test.component';
       <docs-code-block [code]="codeSnipped()" />
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OtherComponent {
   closeButton = model.required<boolean>();

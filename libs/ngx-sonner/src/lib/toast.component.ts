@@ -1,5 +1,6 @@
 import { NgComponentOutlet } from '@angular/common';
 import {
+  afterRenderEffect,
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
@@ -7,9 +8,9 @@ import {
   effect,
   ElementRef,
   input,
+  linkedSignal,
   OnDestroy,
   signal,
-  untracked,
   viewChild,
 } from '@angular/core';
 import { cn } from './internal/cn';
@@ -27,7 +28,6 @@ import { ToastProps } from './types';
 
 @Component({
   selector: 'ngx-sonner-toast',
-  standalone: true,
   imports: [NgComponentOutlet, IsStringPipe, AsComponentPipe],
   template: `
     <li
@@ -235,7 +235,14 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
     this.heights().findIndex(height => height.toastId === this.toast().id)
   );
 
-  offset = signal(0);
+  offset = linkedSignal({
+    source: () => ({
+      heightIndex: this.heightIndex(),
+      toastsHeightBefore: this.toastsHeightBefore(),
+    }),
+    computation: ({ heightIndex, toastsHeightBefore }) =>
+      Math.round(heightIndex * GAP + toastsHeightBefore),
+  });
 
   closeTimerStartTimeRef = 0;
   lastCloseTimerStartTimeRef = 0;
@@ -284,14 +291,6 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
 
   constructor() {
     effect(() => {
-      const heightIndex = this.heightIndex();
-      const toastsHeightBefore = this.toastsHeightBefore();
-      untracked(() =>
-        this.offset.set(Math.round(heightIndex * GAP + toastsHeightBefore))
-      );
-    });
-
-    effect(() => {
       if (this.toast().updated) {
         // if the toast has been updated after the initial render,
         // we want to reset the timer and set the remaining time to the
@@ -303,7 +302,7 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
       }
     });
 
-    effect(onCleanup => {
+    afterRenderEffect(onCleanup => {
       if (!this.isPromiseLoadingOrInfiniteDuration()) {
         if (this.expanded() || this.interacting()) {
           this.pauseTimer();

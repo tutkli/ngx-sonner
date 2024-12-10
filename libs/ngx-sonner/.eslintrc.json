@@ -24,7 +24,8 @@
             "prefix": "ngx-sonner",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@angular-eslint/prefer-standalone": "off"
       }
     },
     {

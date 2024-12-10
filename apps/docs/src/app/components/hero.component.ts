@@ -3,7 +3,6 @@ import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'docs-hero',
-  standalone: true,
   template: `
     <div class="wrapper">
       <div class="toastWrapper">
@@ -21,7 +20,7 @@ import { toast } from 'ngx-sonner';
           data-primary
           (click)="
             toast('Sonner', {
-              description: 'An opinionated toast component for Angular.'
+              description: 'An opinionated toast component for Angular.',
             })
           "
           class="button">

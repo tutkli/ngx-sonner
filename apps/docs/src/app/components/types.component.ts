@@ -4,10 +4,9 @@ import { CodeBlockComponent } from './code-block.component';
 import { CustomComponent } from './custom.component';
 
 @Component({
-  selector: 'docs-types',
-  standalone: true,
-  imports: [CodeBlockComponent],
-  template: `
+    selector: 'docs-types',
+    imports: [CodeBlockComponent],
+    template: `
     <div>
       <h2>Types</h2>
       <p>
@@ -28,7 +27,7 @@ import { CustomComponent } from './custom.component';
       <docs-code-block [code]="activeType().snippet" />
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TypeComponent {
   allTypes = [

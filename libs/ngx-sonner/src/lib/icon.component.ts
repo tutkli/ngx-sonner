@@ -3,7 +3,6 @@ import { ToastTypes } from './types';
 
 @Component({
   selector: 'ngx-sonner-icon',
-  standalone: true,
   template: `
     @switch (type()) {
       @case ('success') {
