@@ -1,3 +1,10 @@
+## [3.1.0](https://github.com/tutkli/ngx-sonner/compare/v3.0.0...v3.1.0) (2025-03-28)
+
+
+### Features
+
+* Introduce overrideable CSS variables with defaults for component styling ([59aeab9](https://github.com/tutkli/ngx-sonner/commit/59aeab94681f3db9eac322bdfba2997df0fbb6e6))
+
 ## [3.0.0](https://github.com/tutkli/ngx-sonner/compare/v2.0.2...v3.0.0) (2024-12-10)
 
 
